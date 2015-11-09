@@ -29,5 +29,7 @@ dependencies {
     compile 'org.adw.library:discrete-seekbar:1.0.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.afollestad:material-dialogs:0.7.7.0'
+    compile 'com.wdullaer:materialdatetimepicker:2.0.0'
+
 
 }

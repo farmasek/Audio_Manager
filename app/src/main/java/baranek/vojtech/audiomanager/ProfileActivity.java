@@ -1,5 +1,6 @@
 package baranek.vojtech.audiomanager;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -30,9 +31,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     //-------Initialize components------//
 
 
+    static String[] rezimy;
     @Bind(R.id.et_TimerName)
     EditText etNazevCasovace;
-
     //---Zacatecni nastaveni---//
     @Bind(R.id.tvZacCas)
     TextView tvZacCas;
@@ -43,7 +44,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     DiscreteSeekBar sliderZacAlarm;
     @Bind(R.id.sliderZacMedia) DiscreteSeekBar sliderZacMedia;
     @Bind(R.id.sliderZacVyzvan) DiscreteSeekBar sliderZacVyzvan;
-
     //---Konecne nastaveni---//
     @Bind(R.id.tvKonCas) TextView tvKonCas;
     @Bind(R.id.tvKonRez) TextView tvKonRez;
@@ -53,7 +53,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     @Bind(R.id.sliderKonVyzvan) DiscreteSeekBar sliderKonVyzvan;
     @Bind(R.id.chbKonec)
     CheckBox chbKonecAktiv;
-
     //---Opakokvani---//
     @Bind(R.id.tgbPo)
     ToggleButton tgbPo;
@@ -63,10 +62,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     @Bind(R.id.tgbPa) ToggleButton tgbPa;
     @Bind(R.id.tgbSo) ToggleButton tgbSo;
     @Bind(R.id.tgbNe) ToggleButton tgbNe;
-
-
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.collapsingToolbar) CollapsingToolbarLayout collapsingToolbar;
+    TimerProfile timer = new TimerProfile();
+    ProfileActivityPresenterImpl profileActivityPresenter = new ProfileActivityPresenterImpl(this);
 
 
     @Override
@@ -75,6 +74,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
          setToolbar();
+        profileActivityPresenter.setSeekersRange();
+        timer = profileActivityPresenter.getDefaultTimerProfile();
+        showData(timer);
+        rezimy = getResources().getStringArray(R.array.sound_modes);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,10 +181,36 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     @Override
     public void showData(TimerProfile timerProfile) {
 
+        etNazevCasovace.setText(timer.getNazev());
+        ProfileSetters.setTextView(tvZacCas, timer.getZacCas());
+        ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(), tvZacRez, cvZacHlasitost);
+        ProfileSetters.setVolumeSliders(sliderZacVyzvan, sliderZacAlarm, sliderZacMedia, timer.getZacVyzvaneni(), timer.getZacAlarm(), timer.getZacMedia());
+
+        ProfileSetters.setTextView(tvKonCas, timer.getKonCas());
+        ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(), tvKonRez, cvKonHlasitost);
+        chbKonecAktiv.setChecked(timer.isKonZap());
+        ProfileSetters.setVolumeSliders(sliderKonVyzvan, sliderKonAlarm, sliderKonMedia, timer.getKonVyzvaneni(), timer.getKonAlarm(), timer.getKonMedia());
+
+        ProfileSetters.setDaysTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe, timer.getDny());
+
+        
     }
 
     @Override
     public void setSeekersRange(int max) {
 
+        sliderKonAlarm.setMax(max);
+        sliderKonMedia.setMax(max);
+        sliderKonVyzvan.setMax(max);
+
+        sliderZacAlarm.setMax(max);
+        sliderZacMedia.setMax(max);
+        sliderZacVyzvan.setMax(max);
+
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 }

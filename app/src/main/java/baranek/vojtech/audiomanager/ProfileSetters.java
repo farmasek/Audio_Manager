@@ -1,11 +1,16 @@
 package baranek.vojtech.audiomanager;
 
 import android.app.FragmentManager;
-import android.app.TimePickerDialog;
+
+
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
+
 import android.widget.ToggleButton;
+
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -15,27 +20,29 @@ import java.util.Calendar;
  * Created by Farmas on 08.11.2015.
  */
 public class ProfileSetters {
-    static TimerClass timerCl = new TimerClass();
+    static TimerProfile timerCl = new TimerProfile();
     static boolean zac;
     static TextView tv;
-    private static String[] rezimy = CreateTimerActivity.rezimy;
+    private static String[] rezimy = ProfileActivity.rezimy;
 
-    public static void getTimeFromTimePicker( FragmentManager frm, TimerClass timer, boolean zacatek, TextView tvToset) {
+    public static void getTimeFromTimePicker(FragmentManager frm, TimerProfile timer, boolean zacatek, TextView tvToset) {
         timerCl=timer;
         zac=zacatek;
         tv= tvToset;
         Calendar cal = Calendar.getInstance();
         TimePickerDialog tpd = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
+            public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1, int i2) {
                 if (zac) {
-                    timerCl.setZacCas(TimerClass.getCasFromHodMin(i, i1));
+                    timerCl.setZacCas(TimerProfile.getCasFromHodMin(i, i1));
                     setTextView(tv, timerCl.getZacCas());
                 } else {
-                    timerCl.setKonCas(TimerClass.getCasFromHodMin(i, i1));
+                    timerCl.setKonCas(TimerProfile.getCasFromHodMin(i, i1));
                     setTextView(tv, timerCl.getKonCas());
                 }
             }
+
+
         }, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), true);
         tpd.show(frm, "TimePicker");
 
@@ -45,7 +52,7 @@ public class ProfileSetters {
 
     public static void setTextView(TextView tv, int cas) {
 
-        tv.setText(TimerClassMethods.getCasFormatedString(cas));
+        tv.setText(TimerProfile.getCasFormatedString(cas));
     }
 
 
@@ -58,7 +65,7 @@ public class ProfileSetters {
 
     }
 
-    public static void getVolumeFromSliders(DiscreteSeekBar sliderAlarm, DiscreteSeekBar sliderMedia, DiscreteSeekBar sliderVyzvan, TimerClass timer, boolean b) {
+    public static void getVolumeFromSliders(DiscreteSeekBar sliderAlarm, DiscreteSeekBar sliderMedia, DiscreteSeekBar sliderVyzvan, TimerProfile timer, boolean b) {
         // b true = zacatek //
         if (b){
             if (timer.getZacRez()==0){
@@ -93,7 +100,7 @@ public class ProfileSetters {
 
     }
 
-    public static void getDaysFromTgbs(ToggleButton tgbPo, ToggleButton tgbUt, ToggleButton tgbSt, ToggleButton tgbCt, ToggleButton tgbPa, ToggleButton tgbSo, ToggleButton tgbNe,TimerClass timer) {
+    public static void getDaysFromTgbs(ToggleButton tgbPo, ToggleButton tgbUt, ToggleButton tgbSt, ToggleButton tgbCt, ToggleButton tgbPa, ToggleButton tgbSo, ToggleButton tgbNe, TimerProfile timer) {
 
         StringBuffer stringBuffer = new StringBuffer();
 
