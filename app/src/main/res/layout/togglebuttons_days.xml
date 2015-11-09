@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/TgbDnyHeight"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="8dp"
+    android:layout_marginRight="3dp">
+
+
+        <ToggleButton
+            android:id="@+id/tgbPo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TgbDnyHeight"
+            android:layout_weight="1"
+            android:textOff="@string/Pondeli"
+            android:textOn="@string/Pondeli"
+            android:background="@drawable/toggle_style"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="6dp"
+            />
+
+        <ToggleButton
+            android:id="@+id/tgbUt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TgbDnyHeight"
+            android:layout_weight="1"
+            android:textOff="@string/Utery"
+            android:textOn="@string/Utery"
+            android:background="@drawable/toggle_style"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="6dp"
+      />
+
+        <ToggleButton
+            android:id="@+id/tgbSt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TgbDnyHeight"
+            android:layout_weight="1"
+            android:textOff="@string/Streda"
+            android:textOn="@string/Streda"
+            android:background="@drawable/toggle_style"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="6dp"/>
+
+        <ToggleButton
+            android:id="@+id/tgbCt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TgbDnyHeight"
+            android:layout_weight="1"
+            android:textOff="@string/Ctvrtek"
+            android:textOn="@string/Ctvrtek"
+            android:background="@drawable/toggle_style"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="6dp"/>
+
+        <ToggleButton
+            android:id="@+id/tgbPa"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TgbDnyHeight"
+            android:layout_weight="1"
+            android:textOff="@string/Patek"
+            android:textOn="@string/Patek"
+            android:background="@drawable/toggle_style"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="6dp"/>
+
+        <ToggleButton
+            android:id="@+id/tgbSo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TgbDnyHeight"
+            android:layout_weight="1"
+            android:textOff="@string/Sobota"
+            android:textOn="@string/Sobota"
+            android:background="@drawable/toggle_style"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="6dp"/>
+
+        <ToggleButton
+            android:id="@+id/tgbNe"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TgbDnyHeight"
+            android:layout_weight="1"
+            android:textOff="@string/Nedele"
+            android:textOn="@string/Nedele"
+            android:background="@drawable/toggle_style"
+            android:textColor="@color/color_white"
+            android:layout_marginLeft="6dp"
+          />
+    </LinearLayout>

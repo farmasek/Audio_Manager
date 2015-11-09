@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sound_modes">
+        <item>Hlasitý režim</item>
+        <item>Tichý režim</item>
+        <item>Režim Vibrace</item>
+    </string-array>
+</resources>

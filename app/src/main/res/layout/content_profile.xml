@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_profile" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="baranek.vojtech.audiomanager.ProfileActivity">
+
+   
+    <LinearLayout
+
+         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!--ZACATEk NASTAVENI-->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/strZacatek"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                <include layout="@layout/separator" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/lv_item_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="99:99"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_marginRight="-8dp"
+                        android:layout_marginTop="-8dp"
+                        android:id="@+id/tvZacCas" />
+
+                    <include layout="@layout/separator_vertical" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/nastavRezim"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_marginLeft="-8dp"
+                        android:layout_marginTop="-8dp"
+                        android:id="@+id/tvZacRez" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- VOLUME SETTER ZACATEK -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvZacHlasitost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="-4dp"
+                    android:gravity="center"
+                    android:text="@string/hlasitost"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                <include layout="@layout/separator" />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/media"
+
+                    />
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderZacMedia" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/vyzvaneni"
+
+                    />
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderZacVyzvan" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/alarm"
+
+                    />
+
+
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderZacAlarm" />
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- KONECNE NASTAVENI -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginTop="8dp"
+
+            >
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+
+                    >
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/konec"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+
+                    <CheckBox
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:checked="false"
+                        android:id="@+id/chbKonec" />
+                </RelativeLayout>
+
+
+                <include layout="@layout/separator" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/lv_item_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="99:99"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_marginTop="-8dp"
+                        android:layout_marginRight="-8dp"
+                        android:id="@+id/tvKonCas" />
+
+                    <include layout="@layout/separator_vertical" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/nastavRezim"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_marginTop="-8dp"
+                        android:layout_marginLeft="-8dp"
+                        android:id="@+id/tvKonRez" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!-- VOLUME SETTER KONEC -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvKonHlasitost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="-4dp"
+                    android:gravity="center"
+                    android:text="@string/hlasitost"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                <include layout="@layout/separator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/media"
+
+                    />
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderKonMedia" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/vyzvaneni"
+
+                    />
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderKonVyzvan" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/alarm"
+
+                    />
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderKonAlarm"
+                    android:text="dada" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!-- DNY V TYDNU -->
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            android:layout_marginTop="8dp">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/opakovani"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                <include layout="@layout/separator" />
+
+                <include layout="@layout/togglebuttons_days" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!-- BT/WIFI NASTAVENI-->
+        <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--card_view:cardCornerRadius="4dp">-->
+
+        <!--<LinearLayout-->
+
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/ostatní"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
+
+        <!--<include layout="@layout/separator" />-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/lv_item_height">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/bluetooth"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
+        <!--android:layout_alignParentLeft="true"/>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!-->-->
+        <!--<Switch-->
+        <!--android:id="@+id/Switchbt"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textOn="on"-->
+        <!--android:textOff="off"-->
+        <!--android:layout_marginRight="16dp"-->
+
+        <!--/>-->
+        <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--/>-->
+        <!--</LinearLayout>-->
+
+        <!--</RelativeLayout>-->
+
+
+        <!--&lt;!&ndash; WIFI&ndash;&gt;-->
+        <!--<include layout="@layout/separator"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--/>-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/lv_item_height">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/wifi"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
+        <!--android:layout_alignParentLeft="true"/>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!-->-->
+        <!--<Switch-->
+        <!--android:id="@+id/Switchwifi"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textOn="on"-->
+        <!--android:textOff="off"-->
+        <!--android:layout_marginRight="16dp"-->
+
+        <!--/>-->
+        <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--/>-->
+        <!--</LinearLayout>-->
+
+        <!--</RelativeLayout>-->
+
+        <!--</LinearLayout>-->
+
+
+        <!--</android.support.v7.widget.CardView>-->
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

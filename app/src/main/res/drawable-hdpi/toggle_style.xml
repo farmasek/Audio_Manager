@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" >
+        <shape>
+            <corners
+                android:topLeftRadius="3dp"
+                android:bottomLeftRadius="0.1dp"
+                android:topRightRadius="0.1dp"
+                android:bottomRightRadius="3dp" />
+            <gradient
+                android:startColor="@color/tgbCheckedColor"
+                android:endColor="@color/tgbCheckedColor"
+                android:angle="270" />
+        </shape>
+    </item>
+
+    <item android:state_checked="true" >
+        <shape>
+            <corners
+                android:topLeftRadius="3dp"
+                android:bottomLeftRadius="0.1dp"
+                android:topRightRadius="0.1dp"
+                android:bottomRightRadius="3dp" />
+            <gradient
+                android:startColor="@color/colorAccent"
+                android:endColor="@color/colorAccent"
+                android:angle="270" />
+        </shape>
+    </item>
+
+
+
+    <item>
+        <shape>
+            <corners
+                android:topLeftRadius="3dp"
+                android:bottomLeftRadius="0.1dp"
+                android:topRightRadius="0.1dp"
+                android:bottomRightRadius="3dp" />
+            <gradient
+                android:endColor="@color/separatorColor"
+                android:startColor="@color/separatorColor"
+
+                android:angle="270" />
+        </shape>
+    </item>
+
+
+</selector>
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+        <!--<item android:state_checked="false" android:drawable="@color/windowBackground"  />-->
+        <!--<item android:state_checked="true" android:drawable="@color/colorAccent"  />-->
+
+
+
+<!--</selector>-->
