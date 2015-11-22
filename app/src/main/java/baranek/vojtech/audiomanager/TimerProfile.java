@@ -9,7 +9,7 @@ public class TimerProfile {
     private int id;
 
     private int zacCas;
-    private int konCas;
+    private int casDoKonce;
     private int zacRez;
     private int konRez;
     private int zacMedia, zacVyzvaneni, zacAlarm, konMedia, konVyzvaneni, konAlarm;
@@ -18,10 +18,10 @@ public class TimerProfile {
     private String nazev;
     private int position;
 
-    public TimerProfile(int id, String nazev, int zacCas, int konCas, int zacRez, int konRez, int zacMedia, int zacVyzvaneni, int zacAlarm, int konMedia, int konVyzvaneni, int konAlarm, boolean konZap, String dny) {
+    public TimerProfile(int id, String nazev, int zacCas, int casDoKonce, int zacRez, int konRez, int zacMedia, int zacVyzvaneni, int zacAlarm, int konMedia, int konVyzvaneni, int konAlarm, boolean konZap, String dny) {
         this.id = id;
         this.zacCas = zacCas;
-        this.konCas = konCas;
+        this.casDoKonce = casDoKonce;
         this.zacRez = zacRez;
         this.konRez = konRez;
         this.zacMedia = zacMedia;
@@ -45,23 +45,6 @@ public class TimerProfile {
 
     }
 
-    public static int getCasFromHodMin(int konHod, int konMin) {
-        return konHod * 60 + konMin;
-    }
-
-    public static String getZeroBeforMinute(int min) {
-
-        String s;
-        if (min < 10)
-            s = "0" + min;
-        else
-            s = Integer.toString(min);
-        return s;
-    }
-
-    public static String getCasFormatedString(int cas) {
-        return cas / 60 + ":" + getZeroBeforMinute(cas % 60);
-    }
 
     public int getPosition() {
         return position;
@@ -151,17 +134,17 @@ public class TimerProfile {
         this.zacMedia = zacMedia;
     }
 
-    public int getKonCas() {
-        return konCas;
+    public int getCasDoKonce() {
+        return casDoKonce;
     }
 
-    public void setKonCas(int konCas) {
-        this.konCas = konCas;
+    public void setCasDoKonce(int casDoKonce) {
+        this.casDoKonce = casDoKonce;
     }
 
 
-//    public int getKonMin(){ return getKonCas()%60;  }
-//    public int getKonHod(){ return getKonCas()/60;  }
+//    public int getKonMin(){ return getCasDoKonce()%60;  }
+//    public int getKonHod(){ return getCasDoKonce()/60;  }
 
 
 //    public int getZacMin(){ return getZacCas()%60;  }

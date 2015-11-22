@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -76,8 +77,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
          setToolbar();
         profileActivityPresenter.setSeekersRange();
         timer = profileActivityPresenter.getDefaultTimerProfile();
-        showData(timer);
         rezimy = getResources().getStringArray(R.array.sound_modes);
+        showData(timer);
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +89,14 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
                         .setAction("Action", null).show();
             }
         });
+
+        chbKonecAktiv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                profileActivityPresenter.setEndStatus(timer, isChecked);
+            }
+        });
+
 
     }
 
@@ -98,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
 
     private void getDaysFromTgbs() {
 
-        ProfileSetters.getDaysFromTgbs(tgbPo,tgbUt,tgbSt,tgbCt,tgbPa,tgbSo,tgbNe,timer);
+        ProfileSetters.getDaysFromTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe, timer);
     }
 
     private void getVolumeFromSliders() {
@@ -110,12 +121,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
 
     //-- Zacatek time settings --//
     @OnClick(R.id.tvZacCas) void zacTimeSet(){
-        ProfileSetters.getTimeFromTimePicker(getFragmentManager(), timer, true, tvZacCas);
+        ProfileSetters.getTimeFromTimePicker(getFragmentManager(), timer, true, profileActivityPresenter);
     }
 
     //    Konec time settings //
     @OnClick(R.id.tvKonCas) void konTimeSet(){
-        ProfileSetters.getTimeFromTimePicker(getFragmentManager(), timer, false, tvKonCas);
+        ProfileSetters.getTimeFromTimePicker(getFragmentManager(), timer, false, profileActivityPresenter);
     }
 
     //    Select Zacatecni rezim   //
@@ -126,8 +137,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+                        if (i == -1)
+                            i = timer.getZacRez();
                         timer.setZacRez(i);
-                        ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(),tvZacRez,cvZacHlasitost);
+                        ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(), tvZacRez, cvZacHlasitost);
                         return false;
                     }
                 })
@@ -135,6 +148,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
                 .show();
 
     }
+
 
     //    Select koncovy rezim   //
     @OnClick(R.id.tvKonRez) void setTvKonRez(){
@@ -144,8 +158,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+                        if (i == -1)
+                            i = timer.getKonRez();
                         timer.setKonRez(i);
-                        ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(),tvKonRez,cvKonHlasitost);
+                        ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(), tvKonRez, cvKonHlasitost);
                         return false;
                     }
                 })
@@ -154,26 +170,21 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
 
     }
 
-
-
+    /**
+     * Set custom action bar for activity
+     */
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         CollapsingToolbarLayout cv = (CollapsingToolbarLayout)findViewById(R.id.collapsingToolbar);
         cv.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
 
-
+        // Setting  navigation color on post Lollipop devices
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // clear FLAG_TRANSLUCENT_STATUS flag:
-
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            // finally change the color
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
     }
@@ -182,32 +193,51 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     public void showData(TimerProfile timerProfile) {
 
         etNazevCasovace.setText(timer.getNazev());
-        ProfileSetters.setTextView(tvZacCas, timer.getZacCas());
+        profileActivityPresenter.setStartTextString(timer);
         ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(), tvZacRez, cvZacHlasitost);
         ProfileSetters.setVolumeSliders(sliderZacVyzvan, sliderZacAlarm, sliderZacMedia, timer.getZacVyzvaneni(), timer.getZacAlarm(), timer.getZacMedia());
 
-        ProfileSetters.setTextView(tvKonCas, timer.getKonCas());
+
         ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(), tvKonRez, cvKonHlasitost);
         chbKonecAktiv.setChecked(timer.isKonZap());
         ProfileSetters.setVolumeSliders(sliderKonVyzvan, sliderKonAlarm, sliderKonMedia, timer.getKonVyzvaneni(), timer.getKonAlarm(), timer.getKonMedia());
-
+        profileActivityPresenter.setEndTextString(timer);
         ProfileSetters.setDaysTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe, timer.getDny());
 
-        
+
     }
 
     @Override
-    public void setSeekersRange(int max) {
+    public void setSeekersRange(int maxMedia, int maxRing, int maxAlarm) {
+        sliderKonAlarm.setMax(maxAlarm);
+        sliderKonMedia.setMax(maxMedia);
+        sliderKonVyzvan.setMax(maxRing);
 
-        sliderKonAlarm.setMax(max);
-        sliderKonMedia.setMax(max);
-        sliderKonVyzvan.setMax(max);
-
-        sliderZacAlarm.setMax(max);
-        sliderZacMedia.setMax(max);
-        sliderZacVyzvan.setMax(max);
-
+        sliderZacAlarm.setMax(maxAlarm);
+        sliderZacMedia.setMax(maxMedia);
+        sliderZacVyzvan.setMax(maxRing);
     }
+
+    @Override
+    public void setTimePickerStartTime(String time) {
+        tvZacCas.setText(time);
+    }
+
+    @Override
+    public void setTimePickerEndTime(String time) {
+        tvKonCas.setText(time);
+    }
+
+    @Override
+    public void setCheckboxStatus(boolean isActive) {
+        chbKonecAktiv.setChecked(isActive);
+    }
+
+    @Override
+    public void showErrorSnackBar(String errorMessage) {
+        Snackbar.make(getCurrentFocus(), errorMessage, Snackbar.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public Context getContext() {

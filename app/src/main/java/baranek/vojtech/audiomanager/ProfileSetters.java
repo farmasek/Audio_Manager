@@ -1,20 +1,15 @@
 package baranek.vojtech.audiomanager;
 
 import android.app.FragmentManager;
-
-
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
-
 import android.widget.ToggleButton;
 
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
-
-import java.util.Calendar;
 
 /**
  * Created by Farmas on 08.11.2015.
@@ -25,38 +20,46 @@ public class ProfileSetters {
     static TextView tv;
     private static String[] rezimy = ProfileActivity.rezimy;
 
-    public static void getTimeFromTimePicker(FragmentManager frm, TimerProfile timer, boolean zacatek, TextView tvToset) {
+    public static void getTimeFromTimePicker(FragmentManager frm, TimerProfile timer, boolean zacatek, final ProfileActivityPresenter profileActivityPresenter) {
         timerCl=timer;
         zac=zacatek;
-        tv= tvToset;
-        Calendar cal = Calendar.getInstance();
+        int min, hod;
+
+        if (zacatek) {
+            hod = timerCl.getZacCas() / 60;
+            min = timerCl.getZacCas() % 60;
+        } else {
+            int lastEndTime = TimerProfileHelper.getLastTimeToEnd(timerCl);
+            hod = lastEndTime / 60;
+            min = lastEndTime % 60;
+        }
         TimePickerDialog tpd = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1, int i2) {
                 if (zac) {
-                    timerCl.setZacCas(TimerProfile.getCasFromHodMin(i, i1));
-                    setTextView(tv, timerCl.getZacCas());
+                    int lastTimeToEnd = TimerProfileHelper.getLastTimeToEnd(timerCl);
+                    timerCl.setZacCas(TimerProfileHelper.getCasFromHodMin(i, i1));
+                    profileActivityPresenter.setEndTimeIfGood(timerCl, lastTimeToEnd, timerCl.isKonZap());
+                    profileActivityPresenter.setStartTextString(timerCl);
+
                 } else {
-                    timerCl.setKonCas(TimerProfile.getCasFromHodMin(i, i1));
-                    setTextView(tv, timerCl.getKonCas());
+                    profileActivityPresenter.setEndTimeIfGood(timerCl, TimerProfileHelper.getCasFromHodMin(i, i1), true);
                 }
             }
 
 
-        }, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), true);
+        }, hod, min, true);
         tpd.show(frm, "TimePicker");
 
 
 
     }
 
-    public static void setTextView(TextView tv, int cas) {
 
-        tv.setText(TimerProfile.getCasFormatedString(cas));
-    }
 
 
     public static void setTvRezimAndShowCardView(int rezim, TextView tvRezim, CardView cvHlasitost) {
+
         tvRezim.setText(rezimy[rezim]);
         if (rezim ==0)
             cvHlasitost.setVisibility(View.VISIBLE);

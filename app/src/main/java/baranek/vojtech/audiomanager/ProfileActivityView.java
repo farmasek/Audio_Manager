@@ -12,7 +12,15 @@ public interface ProfileActivityView {
      */
     void showData(TimerProfile timerProfile);
 
-    void setSeekersRange(int max);
+    void setSeekersRange(int maxMedia, int maxRing, int maxAlarm);
+
+    void setTimePickerStartTime(String time);
+
+    void setTimePickerEndTime(String time);
+
+    void setCheckboxStatus(boolean isActive);
+
+    void showErrorSnackBar(String errorMessage);
 
     Context getContext();
 

@@ -11,6 +11,14 @@ public interface ProfileActivityPresenter {
 
     void putIntoDatabase(TimerProfile timerProfile);
 
+    void setEndTimeIfGood(TimerProfile timerProfile, int lEndTime, boolean turnOnEnd);
+
+    void setStartTextString(TimerProfile timerProfile);
+
+    void setEndTextString(TimerProfile timerProfile);
+
+    void setEndStatus(TimerProfile timerProfile, boolean checkActive);
+
     void setSeekersRange();
 
 }
