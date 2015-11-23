@@ -12,6 +12,8 @@ public interface ProfileActivityView {
      */
     void showData(TimerProfile timerProfile);
 
+    TimerProfile collectTimerProfileDataFromViews();
+
     void setSeekersRange(int maxMedia, int maxRing, int maxAlarm);
 
     void setTimePickerStartTime(String time);

@@ -103,7 +103,7 @@ public class ProfileSetters {
 
     }
 
-    public static void getDaysFromTgbs(ToggleButton tgbPo, ToggleButton tgbUt, ToggleButton tgbSt, ToggleButton tgbCt, ToggleButton tgbPa, ToggleButton tgbSo, ToggleButton tgbNe, TimerProfile timer) {
+    public static String getDaysFromTgbs(ToggleButton tgbPo, ToggleButton tgbUt, ToggleButton tgbSt, ToggleButton tgbCt, ToggleButton tgbPa, ToggleButton tgbSo, ToggleButton tgbNe) {
 
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -128,7 +128,7 @@ public class ProfileSetters {
         if (tgbNe.isChecked())
             stringBuffer.append("S");   // -- Sunday --//
 
-        timer.setDny(stringBuffer.toString());
+       return stringBuffer.toString();
 
 
     }

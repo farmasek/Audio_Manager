@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AudioManager.iml" filepath="$PROJECT_DIR$/AudioManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Audio_Manager_ntb.iml" filepath="$PROJECT_DIR$/Audio_Manager_ntb.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
