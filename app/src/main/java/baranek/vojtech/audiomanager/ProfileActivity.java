@@ -80,13 +80,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
         rezimy = getResources().getStringArray(R.array.sound_modes);
         showData(timer);
 
-
+        //Collect data and send to presenter
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                profileActivityPresenter.putIntoDatabase(collectTimerProfileDataFromViews());
             }
         });
 
@@ -97,24 +96,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
             }
         });
 
-
-    }
-
-    private void getKonZapFromChBoxandName() {
-
-        timer.setKonZap(chbKonecAktiv.isChecked());
-        timer.setNazev(etNazevCasovace.getText().toString());
-
-    }
-
-    private void getDaysFromTgbs() {
-
-        ProfileSetters.getDaysFromTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe, timer);
-    }
-
-    private void getVolumeFromSliders() {
-        ProfileSetters.getVolumeFromSliders(sliderZacAlarm, sliderZacMedia, sliderZacVyzvan, timer, true);
-        ProfileSetters.getVolumeFromSliders(sliderKonAlarm, sliderKonMedia, sliderKonVyzvan, timer, false);
 
     }
 
@@ -204,6 +185,20 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
         profileActivityPresenter.setEndTextString(timer);
         ProfileSetters.setDaysTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe, timer.getDny());
 
+
+    }
+
+    @Override
+    public TimerProfile collectTimerProfileDataFromViews() {
+
+        timer.setNazev(etNazevCasovace.getText().toString());
+
+        ProfileSetters.getDaysFromTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe);
+
+        ProfileSetters.getVolumeFromSliders(sliderZacAlarm, sliderZacMedia, sliderZacVyzvan, timer, true);
+        ProfileSetters.getVolumeFromSliders(sliderKonAlarm, sliderKonMedia, sliderKonVyzvan, timer, false);
+
+        return timer;
 
     }
 
