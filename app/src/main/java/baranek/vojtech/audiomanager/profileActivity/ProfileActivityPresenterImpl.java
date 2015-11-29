@@ -1,14 +1,20 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.profileActivity;
 
 import android.content.Context;
 import android.media.AudioManager;
+
+import baranek.vojtech.audiomanager.R;
+import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.model.TimerProfile;
+import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 
 /**
  * Created by farmas on 9.11.2015.
  */
 public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
 
-    private ProfileActivityView profileActivityView;
+    public ProfileActivityView profileActivityView;
+    private RealmHelper realmHelper = new RealmHelper();
 
     public ProfileActivityPresenterImpl(ProfileActivityView profileActivityView) {
 
@@ -22,19 +28,20 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
      */
     @Override
     public TimerProfile getDefaultTimerProfile() {
-        TimerProfile timer = new TimerProfile(1, "Ukazkovy casovac", TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6, true, "MTW");
+        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), "Ukazkovy casovac", TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6,5,4, true, "MTW");
         return timer;
     }
 
     @Override
-    public TimerProfile getSelectedTimerProfile() {
-        return null;
+    public TimerProfile getSelectedTimerProfile(int id)
+    {
+            TimerProfile timerProfile = realmHelper.getTimerProfileById(id);
+        return timerProfile;
     }
 
     @Override
     public void putIntoDatabase(TimerProfile timerProfile) {
-
-
+       realmHelper.insertTimerProfileIntoRealm(timerProfile);
     }
 
     /**
@@ -115,9 +122,73 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
         int maxMedia = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int maxAlarm = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
         int maxRing = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+        int maxNot = audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
 
 
-        profileActivityView.setSeekersRange(maxMedia, maxAlarm, maxRing);
+        profileActivityView.setSeekersRange(maxMedia, maxAlarm, maxRing, maxNot);
 
+    }
+
+    @Override
+    public void closeRealm() {
+        realmHelper.close();
+    }
+
+    @Override
+    public TimerProfile getSelectedOrDefaultTimer(int id) {
+
+        TimerProfile timerProfile;
+        if (id == -1)
+        {
+            timerProfile = getDefaultTimerProfile();
+        }
+        else{
+
+            timerProfile = getSelectedTimerProfile(id);
+        }
+
+        return timerProfile;
+    }
+
+    @Override
+    public void profileActivityButtonClick(TimerProfile timerProfile, int id) {
+
+        if (id==-1)
+        putIntoDatabase(timerProfile);
+        else
+        {
+            //// TODO: 29.11.2015 Create Edit block 
+        }
+        
+    }
+
+    @Override
+    public void setDefaultProfileView(int id) {
+        setSeekersRange();
+        if (id==-1){
+            profileActivityView.setMenuItemsVisible(false);
+            profileActivityView.setToolbarTitle(profileActivityView.getContext().getResources().getString(R.string.str_create_profil));
+            profileActivityView.setFabIcon(R.drawable.ic_done_white_24dp);
+
+        }
+        else{
+            profileActivityView.setMenuItemsVisible(true);
+            profileActivityView.setToolbarTitle(profileActivityView.getContext().getResources().getString(R.string.str_edit_profil));
+            profileActivityView.setFabIcon(R.drawable.ic_save_white_24dp);
+        }
+        TimerProfile timerProfile = getSelectedOrDefaultTimer(id);
+        profileActivityView.setViewTimerProfile(timerProfile);
+        profileActivityView.showData();
+
+    }
+
+    @Override
+    public String[] getRezimy() {
+        return profileActivityView.getContext().getResources().getStringArray(R.array.sound_modes);
+    }
+
+    @Override
+    public void deleteTimer(int id) {
+        realmHelper.deleteTimerFromRealm(id);
     }
 }

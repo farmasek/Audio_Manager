@@ -2,6 +2,9 @@ package baranek.vojtech.audiomanager;
 
 import org.junit.Test;
 
+import baranek.vojtech.audiomanager.model.TimerProfile;
+import baranek.vojtech.audiomanager.model.TimerProfileHelper;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertArrayEquals;

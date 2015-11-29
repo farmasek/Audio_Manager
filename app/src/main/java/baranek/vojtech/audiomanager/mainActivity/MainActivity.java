@@ -1,35 +1,87 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.mainActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import baranek.vojtech.audiomanager.R;
+import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.TimerProfileAdapter;
+import baranek.vojtech.audiomanager.model.TimerProfile;
+import baranek.vojtech.audiomanager.profileActivity.ProfileActivity;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MainActivityView {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.recyclerViewShowData)
+    RecyclerView recyclerViewShowData;
+    @Bind(R.id.fab)
+    FloatingActionButton fabAddNewTimer;
+    private RealmHelper realmHelper;
+    private MainActivityPresenter mainActivityPresenter;
+    private TimerProfileAdapter timerProfileAdapter;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realmHelper.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+   timerProfileAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+        realmHelper= new RealmHelper();
+        mainActivityPresenter = new MainActivityPresenterImpl(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        recyclerViewShowData.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayout.VERTICAL);
+        recyclerViewShowData.setLayoutManager(llm);
+
+        RealmResults<TimerProfile> timerProfiles = realmHelper.getRealmResults();
+
+
+         timerProfileAdapter = new TimerProfileAdapter(timerProfiles,mainActivityPresenter);
+        recyclerViewShowData.setAdapter(timerProfileAdapter);
+
+
+
+        fabAddNewTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              Intent i = new Intent(getApplicationContext(),ProfileActivity.class);
-                startActivity(i);
+                mainActivityPresenter.startTimerProfileActivity(-1);
             }
         });
 
@@ -98,5 +150,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
+    }
+
+    @Override
+    public void startTimerProfileActivity(Intent i) {
+        startActivity(i);
     }
 }

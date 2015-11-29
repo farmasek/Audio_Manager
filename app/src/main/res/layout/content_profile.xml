@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_profile" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="baranek.vojtech.audiomanager.ProfileActivity">
+    tools:context=".profileActivity.ProfileActivity">
 
    
     <LinearLayout
@@ -52,6 +52,7 @@
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
                         android:gravity="center"
+                        android:focusable="true"
                         android:text="99:99"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_marginRight="-8dp"
@@ -161,6 +162,23 @@
                     app:dsb_trackColor="@color/separatorColor"
                     app:dsb_indicatorColor="@color/colorAccent"
                     android:id="@+id/sliderZacAlarm" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/notif"/>
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderZacNot" />
 
 
             </LinearLayout>
@@ -324,8 +342,25 @@
                     app:dsb_trackColor="@color/separatorColor"
                     app:dsb_indicatorColor="@color/colorAccent"
                     android:id="@+id/sliderKonAlarm"
-                    android:text="dada" />
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:text="@string/notif"/>
+
+                <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:dsb_min="1"
+                    app:dsb_value="4"
+                    app:dsb_max="7"
+                    app:dsb_progressColor="@color/colorAccent"
+                    app:dsb_trackColor="@color/separatorColor"
+                    app:dsb_indicatorColor="@color/colorAccent"
+                    android:id="@+id/sliderKonNot" />
             </LinearLayout>
+
         </android.support.v7.widget.CardView>
         <!-- DNY V TYDNU -->
         <android.support.v7.widget.CardView

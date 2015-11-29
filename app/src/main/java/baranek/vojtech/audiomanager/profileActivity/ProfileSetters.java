@@ -1,4 +1,4 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.profileActivity;
 
 import android.app.FragmentManager;
 import android.support.v7.widget.CardView;
@@ -11,14 +11,15 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
+import baranek.vojtech.audiomanager.model.TimerProfile;
+import baranek.vojtech.audiomanager.model.TimerProfileHelper;
+
 /**
  * Created by Farmas on 08.11.2015.
  */
 public class ProfileSetters {
-    static TimerProfile timerCl = new TimerProfile();
-    static boolean zac;
-    static TextView tv;
-    private static String[] rezimy = ProfileActivity.rezimy;
+   private static TimerProfile timerCl = new TimerProfile();
+    private static boolean zac;
 
     public static void getTimeFromTimePicker(FragmentManager frm, TimerProfile timer, boolean zacatek, final ProfileActivityPresenter profileActivityPresenter) {
         timerCl=timer;
@@ -58,7 +59,9 @@ public class ProfileSetters {
 
 
 
-    public static void setTvRezimAndShowCardView(int rezim, TextView tvRezim, CardView cvHlasitost) {
+    public static void setTvRezimAndShowCardView(int rezim, ProfileActivityPresenter profileActivityPresenter, TextView tvRezim, CardView cvHlasitost) {
+
+        String [] rezimy = profileActivityPresenter.getRezimy();
 
         tvRezim.setText(rezimy[rezim]);
         if (rezim ==0)
@@ -68,17 +71,20 @@ public class ProfileSetters {
 
     }
 
-    public static void getVolumeFromSliders(DiscreteSeekBar sliderAlarm, DiscreteSeekBar sliderMedia, DiscreteSeekBar sliderVyzvan, TimerProfile timer, boolean b) {
+    public static void getVolumeFromSliders(DiscreteSeekBar sliderAlarm, DiscreteSeekBar sliderMedia, DiscreteSeekBar sliderVyzvan, DiscreteSeekBar sliderNotif, TimerProfile timer, boolean b) {
         // b true = zacatek //
         if (b){
             if (timer.getZacRez()==0){
                 timer.setZacAlarm(sliderAlarm.getProgress());
                 timer.setZacMedia(sliderMedia.getProgress());
-                timer.setZacVyzvaneni(sliderVyzvan.getProgress());}
+                timer.setZacVyzvaneni(sliderVyzvan.getProgress());
+                timer.setZacOzn(sliderNotif.getProgress());
+            }
             else{
                 timer.setZacAlarm(0);
                 timer.setZacMedia(0);
                 timer.setZacVyzvaneni(0);
+                timer.setZacOzn(0);
 
             }
 
@@ -89,11 +95,13 @@ public class ProfileSetters {
                 timer.setKonAlarm(sliderAlarm.getProgress());
                 timer.setKonMedia(sliderMedia.getProgress());
                 timer.setKonVyzvaneni(sliderVyzvan.getProgress());
+                timer.setKonOzn(sliderNotif.getProgress());
             }
             else{
                 timer.setKonAlarm(0);
                 timer.setKonMedia(0);
                 timer.setKonVyzvaneni(0);
+                timer.setKonOzn(0);
 
             }
 
@@ -133,10 +141,11 @@ public class ProfileSetters {
 
     }
 
-    public static void setVolumeSliders (DiscreteSeekBar sliderVyzvan, DiscreteSeekBar sliderAlarm, DiscreteSeekBar sliderMedia, int vyzvan, int alarm, int media) {
+    public static void setVolumeSliders (DiscreteSeekBar sliderVyzvan, DiscreteSeekBar sliderAlarm, DiscreteSeekBar sliderMedia,DiscreteSeekBar sliderNot, int vyzvan, int alarm, int media, int notif) {
         sliderVyzvan.setProgress(vyzvan);
         sliderMedia.setProgress(media);
         sliderAlarm.setProgress(alarm);
+        sliderNot.setProgress(notif);
 
     }
 

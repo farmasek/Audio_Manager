@@ -1,4 +1,4 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.model;
 
 /**
  * Created by Farmas on 22.11.2015.

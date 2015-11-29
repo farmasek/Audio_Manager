@@ -1,14 +1,18 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.profileActivity;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -21,6 +25,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
+import baranek.vojtech.audiomanager.R;
+import baranek.vojtech.audiomanager.model.TimerProfile;
+import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,7 +39,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     //-------Initialize components------//
 
 
-    static String[] rezimy;
+
+
     @Bind(R.id.et_TimerName)
     EditText etNazevCasovace;
     //---Zacatecni nastaveni---//
@@ -41,10 +49,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     @Bind(R.id.tvZacRez) TextView tvZacRez;
     @Bind(R.id.cvZacHlasitost)
     CardView cvZacHlasitost;
-    @Bind(R.id.sliderZacAlarm)
-    DiscreteSeekBar sliderZacAlarm;
+    @Bind(R.id.sliderZacAlarm) DiscreteSeekBar sliderZacAlarm;
     @Bind(R.id.sliderZacMedia) DiscreteSeekBar sliderZacMedia;
     @Bind(R.id.sliderZacVyzvan) DiscreteSeekBar sliderZacVyzvan;
+    @Bind(R.id.sliderZacNot) DiscreteSeekBar sliderZacNot;
     //---Konecne nastaveni---//
     @Bind(R.id.tvKonCas) TextView tvKonCas;
     @Bind(R.id.tvKonRez) TextView tvKonRez;
@@ -52,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     @Bind(R.id.sliderKonAlarm) DiscreteSeekBar sliderKonAlarm;
     @Bind(R.id.sliderKonMedia) DiscreteSeekBar sliderKonMedia;
     @Bind(R.id.sliderKonVyzvan) DiscreteSeekBar sliderKonVyzvan;
+    @Bind(R.id.sliderKonNot) DiscreteSeekBar sliderKonNot;
     @Bind(R.id.chbKonec)
     CheckBox chbKonecAktiv;
     //---Opakokvani---//
@@ -63,10 +72,15 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     @Bind(R.id.tgbPa) ToggleButton tgbPa;
     @Bind(R.id.tgbSo) ToggleButton tgbSo;
     @Bind(R.id.tgbNe) ToggleButton tgbNe;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.collapsingToolbar) CollapsingToolbarLayout collapsingToolbar;
+
+    @Bind(R.id.fab) FloatingActionButton fab;
+
+
     TimerProfile timer = new TimerProfile();
     ProfileActivityPresenterImpl profileActivityPresenter = new ProfileActivityPresenterImpl(this);
+    // id of TimerProfile, if -1 then new profile
+    private int id = -1;
+    private boolean visibility = false;
 
 
     @Override
@@ -74,18 +88,21 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
-         setToolbar();
-        profileActivityPresenter.setSeekersRange();
-        timer = profileActivityPresenter.getDefaultTimerProfile();
-        rezimy = getResources().getStringArray(R.array.sound_modes);
-        showData(timer);
+        setToolbar();
+        //Set default interface
+        id = getIntent().getIntExtra(TimerProfileKeys.KEY_ID,-1);
+        profileActivityPresenter.setDefaultProfileView(id);
+
+
+
 
         //Collect data and send to presenter
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profileActivityPresenter.putIntoDatabase(collectTimerProfileDataFromViews());
+                profileActivityPresenter.profileActivityButtonClick( collectTimerProfileDataFromViews(),id);
+                finish();
             }
         });
 
@@ -99,6 +116,45 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_profile,menu);
+       MenuItem menuItem = menu.findItem(R.id.prof_actionDelete);
+        menuItem.setVisible(false);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        MenuItem item  = menu.findItem(R.id.prof_actionDelete);
+        item.setVisible(visibility);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            //Clicked menu option for delete current timer
+            case R.id.prof_actionDelete:{
+                profileActivityPresenter.deleteTimer(id);
+                finish();
+
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        profileActivityPresenter.closeRealm();
+    }
 
     //-- Zacatek time settings --//
     @OnClick(R.id.tvZacCas) void zacTimeSet(){
@@ -121,7 +177,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
                         if (i == -1)
                             i = timer.getZacRez();
                         timer.setZacRez(i);
-                        ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(), tvZacRez, cvZacHlasitost);
+                        ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(),profileActivityPresenter, tvZacRez, cvZacHlasitost);
                         return false;
                     }
                 })
@@ -142,7 +198,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
                         if (i == -1)
                             i = timer.getKonRez();
                         timer.setKonRez(i);
-                        ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(), tvKonRez, cvKonHlasitost);
+                        ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(),profileActivityPresenter, tvKonRez, cvKonHlasitost);
                         return false;
                     }
                 })
@@ -171,17 +227,17 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     }
 
     @Override
-    public void showData(TimerProfile timerProfile) {
+    public void showData() {
 
         etNazevCasovace.setText(timer.getNazev());
         profileActivityPresenter.setStartTextString(timer);
-        ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(), tvZacRez, cvZacHlasitost);
-        ProfileSetters.setVolumeSliders(sliderZacVyzvan, sliderZacAlarm, sliderZacMedia, timer.getZacVyzvaneni(), timer.getZacAlarm(), timer.getZacMedia());
+        ProfileSetters.setTvRezimAndShowCardView(timer.getZacRez(),profileActivityPresenter, tvZacRez, cvZacHlasitost);
+        ProfileSetters.setVolumeSliders(sliderZacVyzvan, sliderZacAlarm, sliderZacMedia,sliderZacNot, timer.getZacVyzvaneni(), timer.getZacAlarm(), timer.getZacMedia(), timer.getZacOzn());
 
 
-        ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(), tvKonRez, cvKonHlasitost);
+        ProfileSetters.setTvRezimAndShowCardView(timer.getKonRez(),profileActivityPresenter, tvKonRez, cvKonHlasitost);
         chbKonecAktiv.setChecked(timer.isKonZap());
-        ProfileSetters.setVolumeSliders(sliderKonVyzvan, sliderKonAlarm, sliderKonMedia, timer.getKonVyzvaneni(), timer.getKonAlarm(), timer.getKonMedia());
+        ProfileSetters.setVolumeSliders(sliderKonVyzvan, sliderKonAlarm, sliderKonMedia, sliderKonNot,timer.getKonVyzvaneni(), timer.getKonAlarm(), timer.getKonMedia(), timer.getKonOzn());
         profileActivityPresenter.setEndTextString(timer);
         ProfileSetters.setDaysTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe, timer.getDny());
 
@@ -193,24 +249,27 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
 
         timer.setNazev(etNazevCasovace.getText().toString());
 
-        ProfileSetters.getDaysFromTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe);
+        String daysFromTgbs = ProfileSetters.getDaysFromTgbs(tgbPo, tgbUt, tgbSt, tgbCt, tgbPa, tgbSo, tgbNe);
+        timer.setDny(daysFromTgbs);
 
-        ProfileSetters.getVolumeFromSliders(sliderZacAlarm, sliderZacMedia, sliderZacVyzvan, timer, true);
-        ProfileSetters.getVolumeFromSliders(sliderKonAlarm, sliderKonMedia, sliderKonVyzvan, timer, false);
+        ProfileSetters.getVolumeFromSliders(sliderZacAlarm, sliderZacMedia, sliderZacVyzvan,sliderZacNot, timer, true);
+        ProfileSetters.getVolumeFromSliders(sliderKonAlarm, sliderKonMedia, sliderKonVyzvan, sliderKonNot,timer, false);
 
         return timer;
 
     }
 
     @Override
-    public void setSeekersRange(int maxMedia, int maxRing, int maxAlarm) {
+    public void setSeekersRange(int maxMedia, int maxRing, int maxAlarm, int maxNot) {
         sliderKonAlarm.setMax(maxAlarm);
         sliderKonMedia.setMax(maxMedia);
         sliderKonVyzvan.setMax(maxRing);
+        sliderKonNot.setMax(maxNot);
 
         sliderZacAlarm.setMax(maxAlarm);
         sliderZacMedia.setMax(maxMedia);
         sliderZacVyzvan.setMax(maxRing);
+        sliderZacNot.setMax(maxNot);
     }
 
     @Override
@@ -233,9 +292,32 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
         Snackbar.make(getCurrentFocus(), errorMessage, Snackbar.LENGTH_SHORT).show();
     }
 
-
     @Override
     public Context getContext() {
         return getApplicationContext();
     }
+
+    @Override
+    public void setViewTimerProfile(TimerProfile timerProfile) {
+        timer= new TimerProfile(timerProfile);
+    }
+
+    @Override
+    public void setMenuItemsVisible(boolean visibility) {
+        invalidateOptionsMenu();
+        this.visibility=visibility;
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+      TextView toolbarTitle = (TextView)findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(title);
+    }
+
+    @Override
+    public void setFabIcon(int iconID) {
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), iconID, null);
+        fab.setImageDrawable(drawable);
+    }
+
 }

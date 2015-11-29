@@ -128,4 +128,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="same_time_error">Časy nemohou být stejné</string>
+    <string name="notif">Oznámení</string>
+    <string name="str_create_profil">Tvorba profilu</string>
+    <string name="str_edit_profil">Úprava profilu</string>
 </resources>

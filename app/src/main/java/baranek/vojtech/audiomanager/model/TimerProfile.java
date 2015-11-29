@@ -1,24 +1,32 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.model;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Farmas on 08.11.2015.
  */
-public class TimerProfile {
+public class TimerProfile extends RealmObject{
 
 
+    @PrimaryKey
     private int id;
 
     private int zacCas;
     private int casDoKonce;
     private int zacRez;
     private int konRez;
-    private int zacMedia, zacVyzvaneni, zacAlarm, konMedia, konVyzvaneni, konAlarm;
+    private int zacMedia, zacVyzvaneni, zacAlarm,zacOzn, konOzn, konMedia, konVyzvaneni, konAlarm;
     private boolean konZap;
     private String dny;
     private String nazev;
-    private int position;
 
-    public TimerProfile(int id, String nazev, int zacCas, int casDoKonce, int zacRez, int konRez, int zacMedia, int zacVyzvaneni, int zacAlarm, int konMedia, int konVyzvaneni, int konAlarm, boolean konZap, String dny) {
+
+
+    public TimerProfile(int id, String nazev, int zacCas, int casDoKonce, int zacRez, int konRez,
+                        int zacMedia, int zacVyzvaneni, int zacAlarm, int konMedia, int konVyzvaneni, int konAlarm,
+                        int zacOzn, int konOzn,
+                        boolean konZap, String dny) {
         this.id = id;
         this.zacCas = zacCas;
         this.casDoKonce = casDoKonce;
@@ -28,12 +36,14 @@ public class TimerProfile {
         this.zacVyzvaneni = zacVyzvaneni;
         this.zacAlarm = zacAlarm;
         this.konMedia = konMedia;
+        this.zacOzn = zacOzn;
+        this.konOzn=konOzn;
         this.konVyzvaneni = konVyzvaneni;
         this.konAlarm = konAlarm;
         this.konZap = konZap;
         this.dny = dny;
         this.nazev = nazev;
-        this.position = position;
+
     }
 
     public TimerProfile() {
@@ -41,17 +51,40 @@ public class TimerProfile {
 
     public TimerProfile(TimerProfile t) {
         this.id = t.getId();
+        this.zacCas = t.getZacCas();
+        this.casDoKonce = t.getCasDoKonce();
+        this.zacRez = t.getZacRez();
+        this.konRez = t.getKonRez();
+        this.zacMedia = t.getZacMedia();
+        this.zacVyzvaneni = t.getZacVyzvaneni();
+        this.zacAlarm = t.getZacAlarm();
+        this.konMedia = t.getKonMedia();
+        this.zacOzn = t.getZacOzn();
+        this.konOzn=t.getKonOzn();
+        this.konVyzvaneni = t.getKonVyzvaneni();
+        this.konAlarm = t.getKonAlarm();
+        this.konZap = t.isKonZap();
+        this.dny = t.getDny();
         this.nazev = t.getNazev();
 
     }
 
 
-    public int getPosition() {
-        return position;
+
+    public int getZacOzn() {
+        return zacOzn;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setZacOzn(int zacOzn) {
+        this.zacOzn = zacOzn;
+    }
+
+    public int getKonOzn() {
+        return konOzn;
+    }
+
+    public void setKonOzn(int konOzn) {
+        this.konOzn = konOzn;
     }
 
     public int getId() {
@@ -141,14 +174,6 @@ public class TimerProfile {
     public void setCasDoKonce(int casDoKonce) {
         this.casDoKonce = casDoKonce;
     }
-
-
-//    public int getKonMin(){ return getCasDoKonce()%60;  }
-//    public int getKonHod(){ return getCasDoKonce()/60;  }
-
-
-//    public int getZacMin(){ return getZacCas()%60;  }
-//    public int getZacHod(){ return getZacCas()/60;  }
 
     public int getZacCas() {
         return zacCas;
