@@ -44,6 +44,13 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
        realmHelper.insertTimerProfileIntoRealm(timerProfile);
     }
 
+    @Override
+    public void editIteminDatabase(TimerProfile timerProfile) {
+
+        realmHelper.editItemInRealm(timerProfile);
+
+    }
+
     /**
      * Check if end is bigger than start time.
      *
@@ -153,11 +160,11 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
     @Override
     public void profileActivityButtonClick(TimerProfile timerProfile, int id) {
 
-        if (id==-1)
-        putIntoDatabase(timerProfile);
+        if (id==-1){
+            putIntoDatabase(timerProfile);}
         else
         {
-            //// TODO: 29.11.2015 Create Edit block 
+            editIteminDatabase(timerProfile);
         }
         
     }

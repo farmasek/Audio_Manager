@@ -13,6 +13,8 @@ public interface ProfileActivityPresenter {
 
     void putIntoDatabase(TimerProfile timerProfile);
 
+    void editIteminDatabase(TimerProfile timerProfile);
+
     void setEndTimeIfGood(TimerProfile timerProfile, int lEndTime, boolean turnOnEnd);
 
     void setStartTextString(TimerProfile timerProfile);

@@ -72,4 +72,10 @@ public class RealmHelper {
         realm.commitTransaction();
 
     }
+
+    public void editItemInRealm(TimerProfile timerProfile) {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(timerProfile);
+        realm.commitTransaction();
+    }
 }
