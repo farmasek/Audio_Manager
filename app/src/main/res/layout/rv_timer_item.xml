@@ -1,27 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="4dp"
-    android:layout_margin="5dp">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/rv_itemNazev"
-        android:layout_width="wrap_content"
-        android:text="Nazev"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/rv_itemsecLine"
-        android:layout_width="100dp"
-        android:text="Nazev"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_height="wrap_content" />
+    android:layout_margin="5dp"
 
-</LinearLayout>
-    </android.support.v7.widget.CardView>
+    card_view:cardCornerRadius="4dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/rv_itemNazev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nazev"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/rv_switchitemOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/rv_ZacIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginRight="5dp"
+                />
+
+            <TextView
+                android:id="@+id/rv_ZacTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="16:00"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/black" />
+
+
+            <TextView
+                android:id="@+id/rvZacRezim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tichý"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/rv_zacHlasitost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ozn - 5 / Vyz - 13 / Med - 6 / Alarm - 3 "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/rv_KonIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+               />
+
+            <TextView
+                android:id="@+id/rv_KonTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="21:35"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/black" />
+
+
+            <TextView
+                android:id="@+id/rv_KonRez"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hlasitý"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/rv_KonHlas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ozn - 5 / Vyz - 13 / Med - 6 / Alarm - 3 "
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
+
+            android:id="@+id/rv_Dny"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Po Út St Čt Pá So Ne"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

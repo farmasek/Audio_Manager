@@ -77,7 +77,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
 
 
     TimerProfile timer = new TimerProfile();
-    ProfileActivityPresenterImpl profileActivityPresenter = new ProfileActivityPresenterImpl(this);
+    ProfileActivityPresenterImpl profileActivityPresenter ;
+            //
     // id of TimerProfile, if -1 then new profile
     private int id = -1;
     private boolean visibility = false;
@@ -91,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
         setToolbar();
         //Set default interface
         id = getIntent().getIntExtra(TimerProfileKeys.KEY_ID,-1);
+        profileActivityPresenter= new ProfileActivityPresenterImpl(this);
         profileActivityPresenter.setDefaultProfileView(id);
 
 

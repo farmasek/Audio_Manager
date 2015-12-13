@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(realmConfiguration);
-        realmHelper= new RealmHelper();
+        realmHelper= new RealmHelper(getApplicationContext());
         mainActivityPresenter = new MainActivityPresenterImpl(this);
 
         recyclerViewShowData.setHasFixedSize(true);
@@ -134,7 +134,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camara) {
-            // Handle the camera action
+            RealmResults<TimerProfile> timerProfiles = realmHelper.getRealmResults();
+            timerProfileAdapter = new TimerProfileAdapter(timerProfiles,mainActivityPresenter);
+            recyclerViewShowData.setAdapter(timerProfileAdapter);
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

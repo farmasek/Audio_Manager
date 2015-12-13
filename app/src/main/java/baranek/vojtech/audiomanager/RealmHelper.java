@@ -1,8 +1,12 @@
 package baranek.vojtech.audiomanager;
 
+import android.content.Context;
+
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
@@ -11,13 +15,24 @@ import io.realm.RealmResults;
 public class RealmHelper {
 
     private Realm realm=null;
+    private   RealmConfiguration config;
+    public RealmHelper(Context c) {
 
-    public RealmHelper() {
+      config = new RealmConfiguration.Builder(c)
+                .schemaVersion(4)
+               // .migration(new TimerProfileMigration())
+              .deleteRealmIfMigrationNeeded()
+                .build();
+
+
     if (realm ==null || realm.isClosed())
-        realm = Realm.getDefaultInstance();
+        realm = Realm.getInstance(config);
+
+
     }
 
     public  void insertTimerProfileIntoRealm( final TimerProfile timerProfile){
+
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -43,6 +58,58 @@ public class RealmHelper {
         realmResults=realm.where(TimerProfile.class)
                 .findAll();
 
+        return realmResults;
+    }
+
+
+    public RealmResults<TimerProfile> getQueryResBetween(TimerProfile timerProfile, String[] strDays){
+
+        int casDoKonce = timerProfile.getCasDoKonce();
+        if (!timerProfile.isKonZap()){
+            casDoKonce=0;
+        }
+
+        RealmResults<TimerProfile> realmResults;
+        RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
+
+        query.not().equalTo("id", timerProfile.getId());
+        query.equalTo("isTimerZap", true);
+        query.beginGroup();
+        for (int i = 0; i < strDays.length; i++) {
+            query.contains("dny", strDays[i]);
+
+            if (i!=strDays.length-1)
+                query.or();
+        }
+        query.endGroup();
+        query.between("zacCas", timerProfile.getZacCas(), timerProfile.getZacCas() + casDoKonce);
+
+        realmResults=query.findAll();
+        return realmResults;
+    }
+    public RealmResults<TimerProfile> getQueryResNotBetween(TimerProfile timerProfile, String[] strDays){
+
+        int casDoKonce = timerProfile.getCasDoKonce();
+        if (!timerProfile.isKonZap()){
+            casDoKonce=0;
+        }
+
+        RealmResults<TimerProfile> realmResults;
+        RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
+
+        query.not().equalTo("id", timerProfile.getId());
+        query.equalTo("isTimerZap",true);
+        query.beginGroup();
+        for (int i = 0; i < strDays.length; i++) {
+            query.contains("dny", strDays[i]);
+
+            if (i!=strDays.length-1)
+                query.or();
+        }
+        query.endGroup();
+        query.not().between("zacCas", timerProfile.getZacCas(), timerProfile.getZacCas() + casDoKonce);
+
+        realmResults=query.findAll();
         return realmResults;
     }
 
@@ -76,6 +143,16 @@ public class RealmHelper {
     public void editItemInRealm(TimerProfile timerProfile) {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(timerProfile);
+        realm.commitTransaction();
+    }
+
+    public void setTimerActivity(TimerProfile timerProfile, boolean b) {
+
+        realm.beginTransaction();
+        TimerProfile retTimer = realm.where(TimerProfile.class)
+                .equalTo(TimerProfileKeys.KEY_ID, timerProfile.getId())
+                .findFirst();
+        retTimer.setIsTimerZap(b);
         realm.commitTransaction();
     }
 }

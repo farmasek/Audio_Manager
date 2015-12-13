@@ -1,5 +1,7 @@
 package baranek.vojtech.audiomanager.model;
 
+import android.support.annotation.Nullable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -21,12 +23,14 @@ public class TimerProfile extends RealmObject{
     private String dny;
     private String nazev;
 
+    private boolean isTimerZap;
+
 
 
     public TimerProfile(int id, String nazev, int zacCas, int casDoKonce, int zacRez, int konRez,
                         int zacMedia, int zacVyzvaneni, int zacAlarm, int konMedia, int konVyzvaneni, int konAlarm,
                         int zacOzn, int konOzn,
-                        boolean konZap, String dny) {
+                        boolean konZap, String dny, boolean isZap) {
         this.id = id;
         this.zacCas = zacCas;
         this.casDoKonce = casDoKonce;
@@ -43,6 +47,7 @@ public class TimerProfile extends RealmObject{
         this.konZap = konZap;
         this.dny = dny;
         this.nazev = nazev;
+        this.isTimerZap = isZap;
 
     }
 
@@ -66,10 +71,16 @@ public class TimerProfile extends RealmObject{
         this.konZap = t.isKonZap();
         this.dny = t.getDny();
         this.nazev = t.getNazev();
-
+        this.isTimerZap = t.isTimerZap();
     }
 
+    public boolean isTimerZap() {
+        return isTimerZap;
+    }
 
+    public void setIsTimerZap(boolean isTimerZap) {
+        this.isTimerZap = isTimerZap;
+    }
 
     public int getZacOzn() {
         return zacOzn;

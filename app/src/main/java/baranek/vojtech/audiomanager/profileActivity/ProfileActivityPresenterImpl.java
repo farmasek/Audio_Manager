@@ -3,6 +3,7 @@ package baranek.vojtech.audiomanager.profileActivity;
 import android.content.Context;
 import android.media.AudioManager;
 
+import baranek.vojtech.audiomanager.AlarmCollisionChecker;
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
@@ -14,11 +15,12 @@ import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
 
     public ProfileActivityView profileActivityView;
-    private RealmHelper realmHelper = new RealmHelper();
+    private RealmHelper realmHelper ;
 
     public ProfileActivityPresenterImpl(ProfileActivityView profileActivityView) {
 
         this.profileActivityView = profileActivityView;
+        realmHelper = new RealmHelper(this.profileActivityView.getContext());
     }
 
     /**
@@ -28,7 +30,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
      */
     @Override
     public TimerProfile getDefaultTimerProfile() {
-        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), "Ukazkovy casovac", TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6,5,4, true, "MTW");
+        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), "Ukazkovy casovac", TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6,5,4, true, "MTW",false);
         return timer;
     }
 
@@ -159,6 +161,8 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
 
     @Override
     public void profileActivityButtonClick(TimerProfile timerProfile, int id) {
+
+        timerProfile.setIsTimerZap(!AlarmCollisionChecker.isCollisionWithTimerProfiles(timerProfile,profileActivityView.getContext()));
 
         if (id==-1){
             putIntoDatabase(timerProfile);}
