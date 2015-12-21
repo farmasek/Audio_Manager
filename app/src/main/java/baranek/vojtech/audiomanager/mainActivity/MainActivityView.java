@@ -11,4 +11,6 @@ public interface MainActivityView {
     Context getContext();
 
     void startTimerProfileActivity(Intent i);
+
+    void showToastMessage(String msg);
 }

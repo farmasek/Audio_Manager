@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 
 import baranek.vojtech.audiomanager.AlarmCollisionChecker;
+import baranek.vojtech.audiomanager.AlarmControl;
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
@@ -15,7 +16,7 @@ import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
 
     public ProfileActivityView profileActivityView;
-    private RealmHelper realmHelper ;
+    private RealmHelper realmHelper;
 
     public ProfileActivityPresenterImpl(ProfileActivityView profileActivityView) {
 
@@ -30,20 +31,19 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
      */
     @Override
     public TimerProfile getDefaultTimerProfile() {
-        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), "Ukazkovy casovac", TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6,5,4, true, "MTW",false);
+        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), "Ukazkovy casovac", TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6, 5, 4, true, "MTW", false);
         return timer;
     }
 
     @Override
-    public TimerProfile getSelectedTimerProfile(int id)
-    {
-            TimerProfile timerProfile = realmHelper.getTimerProfileById(id);
+    public TimerProfile getSelectedTimerProfile(int id) {
+        TimerProfile timerProfile = realmHelper.getTimerProfileById(id);
         return timerProfile;
     }
 
     @Override
     public void putIntoDatabase(TimerProfile timerProfile) {
-       realmHelper.insertTimerProfileIntoRealm(timerProfile);
+        realmHelper.insertTimerProfileIntoRealm(timerProfile);
     }
 
     @Override
@@ -147,11 +147,9 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
     public TimerProfile getSelectedOrDefaultTimer(int id) {
 
         TimerProfile timerProfile;
-        if (id == -1)
-        {
+        if (id == -1) {
             timerProfile = getDefaultTimerProfile();
-        }
-        else{
+        } else {
 
             timerProfile = getSelectedTimerProfile(id);
         }
@@ -162,27 +160,40 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
     @Override
     public void profileActivityButtonClick(TimerProfile timerProfile, int id) {
 
-        timerProfile.setIsTimerZap(!AlarmCollisionChecker.isCollisionWithTimerProfiles(timerProfile,profileActivityView.getContext()));
-
-        if (id==-1){
-            putIntoDatabase(timerProfile);}
-        else
-        {
-            editIteminDatabase(timerProfile);
+        timerProfile.setIsTimerZap(!AlarmCollisionChecker.isCollisionWithTimerProfiles(timerProfile, profileActivityView.getContext()));
+        boolean run = false;
+        if (id == -1) {
+            if (timerProfile.getDny().equals("")) {
+                profileActivityView.showErrorSnackBar("Musí být vybrány dny");
+            } else {
+                putIntoDatabase(timerProfile);
+                profileActivityView.finishView();
+                run=true;
+            }
+        } else {
+            if (timerProfile.getDny().equals("")) {
+                profileActivityView.showErrorSnackBar("Musí být vybrány dny");
+            } else {
+                editIteminDatabase(timerProfile);
+                profileActivityView.finishView();
+                run=true;
+            }
         }
-        
+
+        if (timerProfile.isTimerZap()&&run) {
+            AlarmControl.runNextTimer(profileActivityView.getContext());
+        }
     }
 
     @Override
     public void setDefaultProfileView(int id) {
         setSeekersRange();
-        if (id==-1){
+        if (id == -1) {
             profileActivityView.setMenuItemsVisible(false);
             profileActivityView.setToolbarTitle(profileActivityView.getContext().getResources().getString(R.string.str_create_profil));
             profileActivityView.setFabIcon(R.drawable.ic_done_white_24dp);
 
-        }
-        else{
+        } else {
             profileActivityView.setMenuItemsVisible(true);
             profileActivityView.setToolbarTitle(profileActivityView.getContext().getResources().getString(R.string.str_edit_profil));
             profileActivityView.setFabIcon(R.drawable.ic_save_white_24dp);

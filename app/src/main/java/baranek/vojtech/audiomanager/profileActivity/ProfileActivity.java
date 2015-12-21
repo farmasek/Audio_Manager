@@ -103,8 +103,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profileActivityPresenter.profileActivityButtonClick( collectTimerProfileDataFromViews(),id);
-                finish();
+                profileActivityPresenter.profileActivityButtonClick(collectTimerProfileDataFromViews(), id);
+
             }
         });
 
@@ -143,8 +143,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
             //Clicked menu option for delete current timer
             case R.id.prof_actionDelete:{
                 profileActivityPresenter.deleteTimer(id);
-                finish();
-
+                finishView();
                 break;
             }
         }
@@ -320,6 +319,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     public void setFabIcon(int iconID) {
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), iconID, null);
         fab.setImageDrawable(drawable);
+    }
+
+    @Override
+    public void finishView() {
+        finish();
     }
 
 }

@@ -8,6 +8,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Farmas on 26.11.2015.
@@ -98,7 +99,7 @@ public class RealmHelper {
         RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
 
         query.not().equalTo("id", timerProfile.getId());
-        query.equalTo("isTimerZap",true);
+        query.equalTo("isTimerZap", true);
         query.beginGroup();
         for (int i = 0; i < strDays.length; i++) {
             query.contains("dny", strDays[i]);
@@ -112,12 +113,33 @@ public class RealmHelper {
         realmResults=query.findAll();
         return realmResults;
     }
+    public TimerProfile getFirstTimerForDaySinceTime (int currentTimeInMin, String today){
+
+        TimerProfile realmResult=null;
+        RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
+        query.equalTo("isTimerZap", true);
+        query.contains("dny", today);
+        query.greaterThan("zacCas", currentTimeInMin);
+        RealmResults<TimerProfile> realmResults = query.findAllSorted("zacCas", Sort.ASCENDING);
+        if(!realmResults.isEmpty()){
+            realmResult=realmResults.first();
+        }
+
+        return realmResult;
+    }
+
+
 
     public TimerProfile getTimerProfileById(int id ){
 
-        TimerProfile timerProfile = realm.where(TimerProfile.class)
+    /*   RealmResults<TimerProfile> timerProfiles = realm.where(TimerProfile.class)
                 .equalTo(TimerProfileKeys.KEY_ID, id)
-                .findFirst();
+                .findAllSorted("zacCas");
+        TimerProfile timerProfile = timerProfiles.first();*/
+
+        RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
+        query.equalTo(TimerProfileKeys.KEY_ID, id);
+        TimerProfile timerProfile = query.findFirst();
         return timerProfile;
 
     }

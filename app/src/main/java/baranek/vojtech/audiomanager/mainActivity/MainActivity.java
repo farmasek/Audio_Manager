@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.RealmHelper;
@@ -163,5 +164,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void startTimerProfileActivity(Intent i) {
         startActivity(i);
+    }
+
+    @Override
+    public void showToastMessage(String msg) {
+        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

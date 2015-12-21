@@ -38,6 +38,8 @@ public class AlarmCollisionChecker {
                 if (timerProfile.getZacCas()<= cas && cas <=konCas) {
                     ret = true;
                 }
+                if (timerProfile.getZacCas()>t.getZacCas()&& t.getZacCas()<konCas )
+                    ret=true;
                 if(konCas>1440){
                     int h = konCas-1440;
                     h=timerProfile.getZacCas()-h;

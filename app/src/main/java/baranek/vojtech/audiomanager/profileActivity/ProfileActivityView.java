@@ -37,6 +37,8 @@ public interface ProfileActivityView {
 
     void setFabIcon(int iconID);
 
+    void finishView();
+
 
 
 }
