@@ -39,7 +39,6 @@ public class AlarmControl {
             //if timer is already active, skip
             if (c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE).getInt(TimerProfileKeys.KEY_ID, -1) == -1) {
 
-
                 startStartTimer(c, nextTimer, receiverTime);
 
 
