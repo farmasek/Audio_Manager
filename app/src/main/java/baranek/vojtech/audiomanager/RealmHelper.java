@@ -83,7 +83,9 @@ public class RealmHelper {
                 query.or();
         }
         query.endGroup();
-        query.between("zacCas", timerProfile.getZacCas(), timerProfile.getZacCas() + casDoKonce);
+        query.between("zacCas", timerProfile.getZacCas()-1, timerProfile.getZacCas() + casDoKonce+1);
+
+
 
         realmResults=query.findAll();
         return realmResults;
@@ -176,5 +178,20 @@ public class RealmHelper {
                 .findFirst();
         retTimer.setIsTimerZap(b);
         realm.commitTransaction();
+    }
+
+    public TimerProfile getFirstTimerBeforeThisMoment(int currTimeInMinutes, String today) {
+        TimerProfile realmResult=null;
+        RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
+        query.equalTo("isTimerZap", true);
+        query.contains("dny", today);
+        query.lessThan("zacCas", currTimeInMinutes);
+        RealmResults<TimerProfile> realmResults = query.findAllSorted("zacCas", Sort.DESCENDING);
+        if(!realmResults.isEmpty()){
+            realmResult=realmResults.first();
+        }
+
+        return realmResult;
+
     }
 }

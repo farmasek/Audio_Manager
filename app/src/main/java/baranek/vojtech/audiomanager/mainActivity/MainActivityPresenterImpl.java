@@ -3,10 +3,9 @@ package baranek.vojtech.audiomanager.mainActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
-import baranek.vojtech.audiomanager.AlarmCollisionChecker;
-import baranek.vojtech.audiomanager.AlarmControl;
+import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmCollisionChecker;
+import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
@@ -50,7 +49,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
             rh.setTimerActivity(timerProfile, true);
             //Start next Timer
             AlarmControl.runNextTimer(getContext());
-            mainActivityView.showToastMessage("Časovač zapnut");
+          //  mainActivityView.showToastMessage("Časovač zapnut");
             ret = true;
         }
 

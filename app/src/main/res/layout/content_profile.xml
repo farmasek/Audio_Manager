@@ -164,6 +164,7 @@
                     android:id="@+id/sliderZacAlarm" />
 
                 <TextView
+                    android:id="@+id/tvZacNotif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/fab_margin"
@@ -344,6 +345,7 @@
                     android:id="@+id/sliderKonAlarm"
                     />
                 <TextView
+                    android:id="@+id/tvKonNotif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/fab_margin"

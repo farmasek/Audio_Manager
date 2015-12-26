@@ -18,7 +18,8 @@ public class TimerProfile extends RealmObject{
     private int casDoKonce;
     private int zacRez;
     private int konRez;
-    private int zacMedia, zacVyzvaneni, zacAlarm,zacOzn, konOzn, konMedia, konVyzvaneni, konAlarm;
+    private int zacMedia, zacVyzvaneni, zacAlarm,zacOzn,
+            konOzn, konMedia, konVyzvaneni, konAlarm;
     private boolean konZap;
     private String dny;
     private String nazev;

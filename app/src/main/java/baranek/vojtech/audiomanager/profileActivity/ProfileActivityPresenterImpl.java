@@ -3,8 +3,8 @@ package baranek.vojtech.audiomanager.profileActivity;
 import android.content.Context;
 import android.media.AudioManager;
 
-import baranek.vojtech.audiomanager.AlarmCollisionChecker;
-import baranek.vojtech.audiomanager.AlarmControl;
+import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmCollisionChecker;
+import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
@@ -212,5 +212,6 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
     @Override
     public void deleteTimer(int id) {
         realmHelper.deleteTimerFromRealm(id);
+        AlarmControl.runNextTimer(profileActivityView.getContext());
     }
 }

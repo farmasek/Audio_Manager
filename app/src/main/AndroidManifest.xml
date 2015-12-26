@@ -29,8 +29,17 @@
                 android:value=".mainActivity.MainActivity" />
         </activity>
 
-        <service android:name=".AlarmService" />
-        <receiver android:name=".AlarmReceiver"/>
+        <activity android:name=".MyPreferenceActivity"
+            android:label="@string/action_settings">
+        <intent-filter>
+            <category android:name="android.intent.category.PREFERENCE"/>
+        </intent-filter>
+        <meta-data android:name="android.support.PARENT_ACTIVITY"
+                   android:value=".mainActivity.MainActivity"/>
+    </activity>
+
+        <service android:name=".volumeChangeManager.AlarmService" />
+        <receiver android:name=".volumeChangeManager.AlarmReceiver"/>
     </application>
 
 </manifest>

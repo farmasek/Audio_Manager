@@ -1,11 +1,8 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.volumeChangeManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
-
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 
 /**
@@ -16,10 +13,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         int id = intent.getIntExtra(TimerProfileKeys.KEY_ID, -1);
-
-        Toast.makeText(context, "Fakla runnin receive wit id" + id, Toast.LENGTH_SHORT).show();
-        Log.i("ALARMRECEIVER", "Received Alarm id : " + id);
-
 
         if (!intent.getBooleanExtra(TimerProfileKeys.KEY_ISITENDTIMER, false)) {
             //Start service for Start settings
@@ -35,7 +28,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             i.putExtra(TimerProfileKeys.KEY_ISITENDTIMER, true);
             context.startService(i);
         }
-
 
 
     }

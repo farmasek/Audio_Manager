@@ -2,6 +2,7 @@ package baranek.vojtech.audiomanager.mainActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,14 +16,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import baranek.vojtech.audiomanager.MyPreferenceActivity;
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.TimerProfileAdapter;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.profileActivity.ProfileActivity;
+import baranek.vojtech.audiomanager.volumeChangeManager.AndroidProfileChanger;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
@@ -30,7 +34,8 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainActivityView {
+        implements MainActivityView {
+       //NavigationView.OnNavigationItemSelectedListener
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -38,6 +43,12 @@ public class MainActivity extends AppCompatActivity
     RecyclerView recyclerViewShowData;
     @Bind(R.id.fab)
     FloatingActionButton fabAddNewTimer;
+    @Bind(R.id.fabLoud)
+    FloatingActionButton fabLoud;
+    @Bind(R.id.fabSilent)
+    FloatingActionButton fabSilent;
+    @Bind(R.id.fabVibrate)
+    FloatingActionButton fabVibrate;
     private RealmHelper realmHelper;
     private MainActivityPresenter mainActivityPresenter;
     private TimerProfileAdapter timerProfileAdapter;
@@ -77,15 +88,48 @@ public class MainActivity extends AppCompatActivity
          timerProfileAdapter = new TimerProfileAdapter(timerProfiles,mainActivityPresenter);
         recyclerViewShowData.setAdapter(timerProfileAdapter);
 
+        // Setting  navigation color on post Lollipop devices
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
 
 
+        //Fab button clicks handlers
+
+        //plus
         fabAddNewTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mainActivityPresenter.startTimerProfileActivity(-1);
             }
         });
+        //Silent
+        fabSilent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AndroidProfileChanger.setSilentMode(getContext());
+            }
+        });
+        //Vibration
+        fabVibrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               AndroidProfileChanger.setVibrateMode(getContext());
+            }
+        });
+        //Normal
+        fabLoud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO Add Default settings
+               AndroidProfileChanger.setNormalMode(getContext(),5,5,5,5,true);
+            }
+        });
 
+        //Navigation drawer for future features
+/*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -93,10 +137,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);*/
     }
 
-    @Override
+  /*  @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -104,7 +148,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,14 +164,17 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
+            Intent i = new Intent (this, MyPreferenceActivity.class);
+            startActivity(i);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
+    //Navigation drawer for future features
+/*
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -154,7 +201,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
+    }*/
 
     @Override
     public Context getContext() {

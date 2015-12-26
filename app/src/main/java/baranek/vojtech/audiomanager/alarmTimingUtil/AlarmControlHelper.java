@@ -1,4 +1,4 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.alarmTimingUtil;
 
 import baranek.vojtech.audiomanager.model.TimerProfile;
 

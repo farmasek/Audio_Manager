@@ -1,11 +1,12 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.alarmTimingUtil;
 
 import android.content.Context;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import io.realm.RealmResults;
 
@@ -34,16 +35,20 @@ public class AlarmCollisionChecker {
 
             if (t.isKonZap()){
 
-                int cas = t.getZacCas()+t.getCasDoKonce();
-                if (timerProfile.getZacCas()<= cas && cas <=konCas) {
+                int tcasKon = t.getZacCas()+t.getCasDoKonce();
+                //test start in interval
+                if (t.getZacCas()<= timerProfile.getZacCas() && timerProfile.getZacCas() <= tcasKon) {
                     ret = true;
                 }
-                if (timerProfile.getZacCas()>t.getZacCas()&& t.getZacCas()<konCas )
-                    ret=true;
-                if(konCas>1440){
+                //test end in interval
+                if (t.getZacCas()<= konCas && konCas <= tcasKon) {
+                    ret = true;
+                }
+                //test for if interval goes to next day
+                if(konCas>=1440){
                     int h = konCas-1440;
                     h=timerProfile.getZacCas()-h;
-                    if (cas<=h){
+                    if (tcasKon<=h){
                         ret = true;
                     }
 

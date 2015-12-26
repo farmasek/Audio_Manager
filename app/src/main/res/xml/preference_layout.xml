@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="isNotifActive"
+        android:title="Hlasitost oznámení"
+        android:summary="Nemá li váš telefon možnost nastavit ručně hlasitost oznámení, vypněte tuto možnost."
+        />
+
+</PreferenceScreen>
