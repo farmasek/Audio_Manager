@@ -42,11 +42,11 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
         boolean collisionWithTimerProfiles = AlarmCollisionChecker.isCollisionWithTimerProfiles(timerProfile, getContext());
         if (collisionWithTimerProfiles) {
             mainActivityView.showToastMessage("Časovač není možno zapnout, je v koklizi s jiným.");
-            rh.setTimerActivity(timerProfile, false);
+            rh.setTimerActivity(timerProfile.getId(), false);
             ret = false;
         } else {
 
-            rh.setTimerActivity(timerProfile, true);
+            rh.setTimerActivity(timerProfile.getId(), true);
             //Start next Timer
             AlarmControl.runNextTimer(getContext());
           //  mainActivityView.showToastMessage("Časovač zapnut");
@@ -58,16 +58,9 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
     }
 
     @Override
-    public void setTimerProfileInActive(TimerProfile timerProfile) {
+    public void setTimerProfileInActive(int id) {
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME,Context.MODE_PRIVATE);
-
-        RealmHelper rh = new RealmHelper(getContext());
-        rh.setTimerActivity(timerProfile, false);
-        //if turning off active timer, change active id
-        if (timerProfile.getId()== sharedPreferences.getInt(TimerProfileKeys.KEY_ID,-1))
-        sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID,-1).apply();
-        AlarmControl.runNextTimer(getContext());
+        AlarmControl.turnOffTimer(id,getContext());
 
     }
 }

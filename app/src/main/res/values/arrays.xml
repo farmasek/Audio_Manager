@@ -2,8 +2,21 @@
 <resources>
 
     <string-array name="sound_modes">
-        <item>Hlasitý režim</item>
+        <item>Vlastní režim</item>
         <item>Tichý režim</item>
         <item>Režim Vibrace</item>
     </string-array>
+
+    <string-array name="prefs_notif_slideable_name">
+        <item>Neodstranitelná</item>
+        <item>Odstranitelná</item>
+     </string-array>
+
+    <string-array name="prefs_notifs_slideable_values">
+        <item>0</item>
+        <item>1</item>
+
+    </string-array>
+
+
 </resources>

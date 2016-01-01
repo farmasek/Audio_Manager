@@ -5,11 +5,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
+import baranek.vojtech.audiomanager.notifications.NotificationHelper;
+import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 import baranek.vojtech.audiomanager.volumeChangeManager.AlarmReceiver;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
@@ -23,9 +24,11 @@ public class AlarmControl {
 
     public static void runNextTimer(Context c) {
 
+        NotificationHelper.closeNotification(c);
         AlarmControlHelper alarmControlHelper = getNextTimer(c);
 
         runTimerReceiver(c, alarmControlHelper);
+
     }
 
     public static void runTimerReceiver(Context c, AlarmControlHelper alarmControlHelper) {
@@ -39,6 +42,8 @@ public class AlarmControl {
             //if timer is already active, skip
             if (c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE).getInt(TimerProfileKeys.KEY_ID, -1) == -1) {
 
+                stopBothTimers(c);
+
                 startStartTimer(c, nextTimer, receiverTime);
 
 
@@ -49,6 +54,19 @@ public class AlarmControl {
 
             }
         }
+
+    }
+
+    public static void stopBothTimers(Context c) {
+
+        AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+        Intent intentKon = new Intent(c, AlarmReceiver.class);
+        PendingIntent pintKon = PendingIntent.getBroadcast(c, 100, intentKon, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pintKon);
+        Intent intent = new Intent(c, AlarmReceiver.class);
+        PendingIntent pint = PendingIntent.getBroadcast(c, 50, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pint);
+
     }
 
     private static void startEndTimer(Context c, TimerProfile nextTimer, long receiverTime) {
@@ -63,10 +81,15 @@ public class AlarmControl {
         PendingIntent pintKon = PendingIntent.getBroadcast(c, 100, intentKon, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.cancel(pintKon);
-        //Start new alarm only if end is on
+        //Start new end alarm only if end is on
         if (nextTimer.isKonZap()) {
             long endReceiverTime = receiverTime + nextTimer.getCasDoKonce() * 60 * 1000;
             alarmManager.set(AlarmManager.RTC, endReceiverTime, pintKon);
+
+            //Save end ReceiverTime for notifications
+            SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
+            sharedPreferences.edit().putLong(TimerProfileKeys.KEY_KONTIMERECEIVEINMILLIS, endReceiverTime).apply();
+
 
         }
 
@@ -84,11 +107,15 @@ public class AlarmControl {
         alarmManager.cancel(pint);
         alarmManager.set(AlarmManager.RTC, receiverTime, pint);
 
+        //Notification
+
+        NotificationHelper.showNotification(c, receiverTime);
     }
 
 
     /**
      * Scan for active TimerProfiles and run the nearest to actual time
+     * Run TimerProfile if there is active at this time
      *
      * @param c context
      * @return next timer and time to start in millis
@@ -108,21 +135,22 @@ public class AlarmControl {
         String strDayOfWeek = getDayShortCutFromDayNumber(dayOfWeek);
 
 
-        timer = findIfThereIsTimerForThisTime(currTimeInMinutes/60, strDayOfWeek, c);
+        timer = findIfThereIsTimerForThisTime(currTimeInMinutes / 60, strDayOfWeek, c);
         //run timer if there is active timer for actual time
         //TODO test iteraction with other searching
         if (timer != null) {
 
-            cal.set(Calendar.HOUR_OF_DAY,timer.getZacCas()/60);
-            cal.set(Calendar.MINUTE,timer.getZacCas()%60);
-            receiverTime = cal.getTimeInMillis()+timer.getCasDoKonce()*60*1000;
+            cal.set(Calendar.HOUR_OF_DAY, timer.getZacCas() / 60);
+            cal.set(Calendar.MINUTE, timer.getZacCas() % 60);
+            receiverTime = cal.getTimeInMillis() + timer.getCasDoKonce() * 60 * 1000;
 
-            AndroidProfileChanger.changeVolumeProfile(c,timer.getId(),true);
+            AndroidProfileChanger.changeVolumeProfile(c, timer.getId(), true);
 
             startEndTimer(c, timer, receiverTime);
             SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
             sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID, timer.getId()).apply();
-
+            sharedPreferences.edit().putLong(TimerProfileKeys.KEY_KONTIMERECEIVEINMILLIS, receiverTime);
+            NotificationHelper.showNotification(c,receiverTime);
 
 
         } else {
@@ -165,13 +193,12 @@ public class AlarmControl {
     private static TimerProfile findIfThereIsTimerForThisTime(int currTimeInMinutes, String today, Context c) {
         RealmHelper realmHelper = new RealmHelper(c);
 
-        TimerProfile returnTimer= null;
+        TimerProfile returnTimer = null;
         TimerProfile firstTimer = realmHelper.getFirstTimerBeforeThisMoment(currTimeInMinutes, today);
 
-        if (firstTimer != null )
-        {
-            if(firstTimer.getZacCas() + firstTimer.getCasDoKonce() > currTimeInMinutes && firstTimer.isKonZap())
-            returnTimer = firstTimer;
+        if (firstTimer != null) {
+            if (firstTimer.getZacCas() + firstTimer.getCasDoKonce() > currTimeInMinutes && firstTimer.isKonZap())
+                returnTimer = firstTimer;
         }
 
         return returnTimer;
@@ -184,7 +211,7 @@ public class AlarmControl {
      * @param day current day
      * @return next day
      */
-    private static int addOneDay(int day) {
+    public static int addOneDay(int day) {
 
         if (day == 7) {
             day = 1;
@@ -204,7 +231,7 @@ public class AlarmControl {
      * @return first timer, from database, null if no active timers
      */
 
-    private static TimerProfile findTimersForDaySince(int currentTimeInMin, String today, Context c) {
+    public static TimerProfile findTimersForDaySince(int currentTimeInMin, String today, Context c) {
 
         RealmHelper realmHelper = new RealmHelper(c);
 
@@ -222,7 +249,7 @@ public class AlarmControl {
      * @return String of integer day
      */
 
-    private static String getDayShortCutFromDayNumber(int dayOfWeek) {
+    public static String getDayShortCutFromDayNumber(int dayOfWeek) {
 
         String ret = null;
         switch (dayOfWeek) {
@@ -252,6 +279,7 @@ public class AlarmControl {
         return ret;
     }
 
+
     /**
      * Calculate time to start new timer and convert to string
      *
@@ -265,10 +293,20 @@ public class AlarmControl {
         min = timeToReceiveInMinutes % 60;
         hod = timeToReceiveInMinutes / 60;
 
-        String ret = "Další změna profilu za: " + hod + ":" + min;
+        String ret = "Další změna profilu za: " + hod + ":" + TimerProfileHelper.getZeroBeforMinute(min);
 
         return ret;
 
     }
 
+    public static void turnOffTimer(int id,Context c) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME,Context.MODE_PRIVATE);
+
+        RealmHelper rh = new RealmHelper(c);
+        rh.setTimerActivity(id, false);
+        //if turning off active timer, change active id
+        if (id== sharedPreferences.getInt(TimerProfileKeys.KEY_ID,-1))
+            sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID,-1).apply();
+        AlarmControl.runNextTimer(c);
+    }
 }

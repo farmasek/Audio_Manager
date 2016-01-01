@@ -80,6 +80,7 @@ public class AndroidProfileChanger {
         audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
     }
     public static void setSilentMode(Context c){
+
         AudioManager audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
     }

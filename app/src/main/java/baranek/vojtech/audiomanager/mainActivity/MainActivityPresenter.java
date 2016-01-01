@@ -15,5 +15,5 @@ public interface MainActivityPresenter {
 
     boolean setTimerProfileActive(TimerProfile timerProfile);
 
-    void setTimerProfileInActive(TimerProfile timerProfile);
+    void setTimerProfileInActive(int id);
 }

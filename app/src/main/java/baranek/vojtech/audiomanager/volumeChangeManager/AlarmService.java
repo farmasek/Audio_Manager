@@ -4,8 +4,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
+import baranek.vojtech.audiomanager.notifications.NotificationHelper;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.model.TimerProfile;
@@ -42,6 +42,7 @@ public class AlarmService extends IntentService {
             if (timerProfile.isKonZap()) {
                 //  AlarmControl.runNextTimer(getApplicationContext());
                 sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID, id).apply();
+               NotificationHelper.showNotification(getApplicationContext(), sharedPreferences.getLong(TimerProfileKeys.KEY_KONTIMERECEIVEINMILLIS, 0));
             }
 
 

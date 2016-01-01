@@ -117,7 +117,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"
@@ -135,7 +135,7 @@
                 <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"
@@ -155,7 +155,7 @@
                 <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"
@@ -173,7 +173,7 @@
                 <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"
@@ -300,7 +300,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"
@@ -318,7 +318,7 @@
                 <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"
@@ -336,7 +336,7 @@
                 <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"
@@ -354,7 +354,7 @@
                 <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:dsb_min="1"
+                    app:dsb_min="0"
                     app:dsb_value="4"
                     app:dsb_max="7"
                     app:dsb_progressColor="@color/colorAccent"

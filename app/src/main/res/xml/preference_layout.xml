@@ -4,8 +4,29 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="isNotifActive"
-        android:title="Hlasitost oznámení"
         android:summary="Nemá li váš telefon možnost nastavit ručně hlasitost oznámení, vypněte tuto možnost."
-        />
+        android:title="Hlasitost oznámení" />
 
+    <PreferenceCategory android:title="Notifikace">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="isNotifEnable"
+            android:summary="Povolení zobrazení oznámení na zamykací obrazovce"
+            android:title="Zapnout notifikace" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/prefs_notif_slideable_name"
+            android:entryValues="@array/prefs_notifs_slideable_values"
+            android:summary="%s"
+            android:key="notification_slideable"
+            android:title="Možnost odstranění notifikace"/>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="showNotifIcon"
+            android:summary="Povolit zobrazit ikonu v horní liště notifikací"
+            android:title="Zobrazit ikonu" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

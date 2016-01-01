@@ -54,7 +54,7 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
                     if (!b) holder.rvSwitchZap.setChecked(b);
 
                 }else{
-                    mainActivityPresenter.setTimerProfileInActive(timerProfile);
+                    mainActivityPresenter.setTimerProfileInActive(timerProfile.getId());
                 }
 
             }
@@ -106,6 +106,7 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
 
         if (zacRez==0)
         {
+            rvZacHlas.setVisibility(View.VISIBLE);
            rvZacHlas.setText("Vyz - "+ Vyz + " / Méd - " + Med + " /Ozn - " +Ozn + " / Alarm - "+ Alarm);
         }
         else{
@@ -119,7 +120,7 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
         String ret = null;
         switch (zacRez) {
             case 0:
-                ret = "Hlasitý";
+                ret = "Vlastní";
                 break;
 
             case 1:

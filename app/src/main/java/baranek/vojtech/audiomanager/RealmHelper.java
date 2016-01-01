@@ -1,6 +1,8 @@
 package baranek.vojtech.audiomanager;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
@@ -61,6 +63,15 @@ public class RealmHelper {
 
         return realmResults;
     }
+    public  RealmResults<TimerProfile> getAllZapTimerProfiles() {
+
+        RealmResults<TimerProfile> realmResults;
+        realmResults=realm.where(TimerProfile.class)
+                .equalTo("isTimerZap", true)
+                .findAll();
+
+        return realmResults;
+    }
 
 
     public RealmResults<TimerProfile> getQueryResBetween(TimerProfile timerProfile, String[] strDays){
@@ -83,7 +94,7 @@ public class RealmHelper {
                 query.or();
         }
         query.endGroup();
-        query.between("zacCas", timerProfile.getZacCas()-1, timerProfile.getZacCas() + casDoKonce+1);
+        query.between("zacCas", timerProfile.getZacCas() - 1, timerProfile.getZacCas() + casDoKonce + 1);
 
 
 
@@ -170,14 +181,33 @@ public class RealmHelper {
         realm.commitTransaction();
     }
 
-    public void setTimerActivity(TimerProfile timerProfile, boolean b) {
+    public void setTimerActivity(int id, boolean b) {
 
         realm.beginTransaction();
         TimerProfile retTimer = realm.where(TimerProfile.class)
-                .equalTo(TimerProfileKeys.KEY_ID, timerProfile.getId())
+                .equalTo(TimerProfileKeys.KEY_ID, id)
                 .findFirst();
         retTimer.setIsTimerZap(b);
         realm.commitTransaction();
+    }
+
+    public void setTimerActivityAssync(final int id, final boolean b, final Context context) {
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                TimerProfile retTimer = realm.where(TimerProfile.class)
+                        .equalTo(TimerProfileKeys.KEY_ID, id)
+                        .findFirst();
+                retTimer.setIsTimerZap(b);
+            }
+        },new Realm.Transaction.Callback(){
+            @Override
+            public void onSuccess() {
+                Intent i = new Intent(TimerProfileKeys.INTENT_FILTER_KEY);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(i);
+            }
+        });
     }
 
     public TimerProfile getFirstTimerBeforeThisMoment(int currTimeInMinutes, String today) {

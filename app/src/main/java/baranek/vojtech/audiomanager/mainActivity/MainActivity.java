@@ -1,11 +1,14 @@
 package baranek.vojtech.audiomanager.mainActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +29,7 @@ import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.TimerProfileAdapter;
 import baranek.vojtech.audiomanager.model.TimerProfile;
+import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 import baranek.vojtech.audiomanager.profileActivity.ProfileActivity;
 import baranek.vojtech.audiomanager.volumeChangeManager.AndroidProfileChanger;
 import butterknife.Bind;
@@ -60,10 +65,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(refreshRecyclerFromNotifRcvr);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
    timerProfileAdapter.notifyDataSetChanged();
+        LocalBroadcastManager.getInstance(this).registerReceiver(refreshRecyclerFromNotifRcvr,new IntentFilter(TimerProfileKeys.INTENT_FILTER_KEY));
     }
+
+    private BroadcastReceiver refreshRecyclerFromNotifRcvr = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+             timerProfileAdapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
