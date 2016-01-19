@@ -64,7 +64,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         int id = sharedPreferences.getInt(TimerProfileKeys.KEY_ID, -1);
         //if timer is active
         if (-1 != id) {
-            AlarmControl.turnOffTimer(id, context);
+            AlarmControl.turnOffTimerAssync(id, context);
         } else {
             //If there is no timerprofile active, then find next and turn off
             Calendar cal = Calendar.getInstance();
@@ -85,7 +85,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             }
             //if there is next timer, turn him off
             if (timer != null) {
-                AlarmControl.turnOffTimer(timer.getId(), context);
+                AlarmControl.turnOffTimerAssync(timer.getId(), context);
             }
 
         }

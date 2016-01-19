@@ -309,4 +309,14 @@ public class AlarmControl {
             sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID,-1).apply();
         AlarmControl.runNextTimer(c);
     }
+
+    public static void turnOffTimerAssync(int id,Context c) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME,Context.MODE_PRIVATE);
+
+        RealmHelper rh = new RealmHelper(c);
+        rh.setTimerActivityAssyncAndStartNext(id, false,c);
+        //if turning off active timer, change active id
+        if (id== sharedPreferences.getInt(TimerProfileKeys.KEY_ID,-1))
+            sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID,-1).apply();
+           }
 }
