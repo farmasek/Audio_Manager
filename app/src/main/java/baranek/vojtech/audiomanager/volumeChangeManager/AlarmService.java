@@ -44,6 +44,10 @@ public class AlarmService extends IntentService {
                 sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID, id).apply();
                NotificationHelper.showNotification(getApplicationContext(), sharedPreferences.getLong(TimerProfileKeys.KEY_KONTIMERECEIVEINMILLIS, 0));
             }
+            else{
+                sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID, -1).apply();
+                AlarmControl.runNextTimer(getApplicationContext());
+            }
 
 
         }

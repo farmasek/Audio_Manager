@@ -3,7 +3,9 @@ package baranek.vojtech.audiomanager;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -39,8 +41,9 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
     @Override
     public void onBindViewHolder(final TimerViewHolder holder, int position) {
 
+
         final TimerProfile timerProfile = timerProfileList.get(position);
-        holder.rvNazev.setText(timerProfile.getNazev());
+         holder.rvNazev.setText(timerProfile.getNazev() );
         holder.rvZacTime.setText(TimerProfileHelper.getFormatedStartTime(timerProfile));
         holder.rvZacRez.setText(getTimeFromRez(timerProfile.getZacRez()));
         holder.rvZacIW.setImageDrawable(getDrawableForIw(timerProfile.getZacRez()));
@@ -49,12 +52,17 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
         holder.rvSwitchZap.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //Control for automatic change while initialize
+                if (buttonView.isPressed()){
                 if (isChecked){
                     boolean b = mainActivityPresenter.setTimerProfileActive(timerProfile);
-                    if (!b) holder.rvSwitchZap.setChecked(b);
+                   if (!b) holder.rvSwitchZap.setChecked(b);
+
 
                 }else{
                     mainActivityPresenter.setTimerProfileInActive(timerProfile.getId());
+
+                }
                 }
 
             }

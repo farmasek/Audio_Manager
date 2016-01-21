@@ -161,6 +161,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
     public void profileActivityButtonClick(TimerProfile timerProfile, int id) {
 
         timerProfile.setIsTimerZap(!AlarmCollisionChecker.isCollisionWithTimerProfiles(timerProfile, profileActivityView.getContext()));
+       // timerProfile.setIsTimerZap(false);
         boolean run = false;
         if (id == -1) {
             if (timerProfile.getDny().equals("")) {
@@ -169,6 +170,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
                 putIntoDatabase(timerProfile);
                 profileActivityView.finishView();
                 run=true;
+             //   AlarmControl.runNextTimer(profileActivityView.getContext());
             }
         } else {
             if (timerProfile.getDny().equals("")) {
@@ -177,6 +179,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
                 editIteminDatabase(timerProfile);
                 profileActivityView.finishView();
                 run=true;
+           //     AlarmControl.runNextTimer(profileActivityView.getContext());
             }
         }
 
@@ -211,7 +214,8 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
 
     @Override
     public void deleteTimer(int id) {
+        AlarmControl.turnOffTimer(id,profileActivityView.getContext());
         realmHelper.deleteTimerFromRealm(id);
-        AlarmControl.runNextTimer(profileActivityView.getContext());
+
     }
 }

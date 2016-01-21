@@ -22,7 +22,7 @@ public class AlarmCollisionChecker {
             casDoKonce=0;
         }
 
-        int konCas = timerProfile.getZacCas() +casDoKonce;
+        int konCasTestedTimer = timerProfile.getZacCas() +casDoKonce;
 
         RealmHelper realmHelper= new RealmHelper(c);
         RealmResults<TimerProfile> returnedTimersBetween = realmHelper.getQueryResBetween(timerProfile, getDaysArrayFromTimerProfile(timerProfile));
@@ -41,15 +41,42 @@ public class AlarmCollisionChecker {
                     ret = true;
                 }
                 //test end in interval
-                if (t.getZacCas()<= konCas && konCas <= tcasKon) {
+                if (t.getZacCas()<= konCasTestedTimer && konCasTestedTimer <= tcasKon) {
                     ret = true;
                 }
                 //test for if interval goes to next day
-                if(konCas>=1440){
-                    int h = konCas-1440;
-                    h=timerProfile.getZacCas()-h;
-                    if (tcasKon<=h){
-                        ret = true;
+                if(konCasTestedTimer>=1440){
+                    int endTimeNextDay = konCasTestedTimer-1440;
+
+                    if(t.getZacCas()>=0 && t.getZacCas()<=endTimeNextDay){
+                        ret=true;
+                    }
+                    if(tcasKon>=0 && tcasKon<=endTimeNextDay){
+                        ret=true;
+                    }
+
+
+                }
+
+                //Test if returned timer goes to next day
+                if(tcasKon>=1440){
+                    int endTimeNextDay = tcasKon-1440;
+                    //test for start
+                    if(timerProfile.getZacCas()>=0 && timerProfile.getZacCas()<=endTimeNextDay){
+                        ret=true;
+                    }
+                    if(konCasTestedTimer>=0 && konCasTestedTimer<=endTimeNextDay){
+                        ret=true;
+                    }
+
+                }
+
+            }else{
+                if(konCasTestedTimer>=1440){
+                    int endTimeNextDay = konCasTestedTimer-1440;
+
+                    if(t.getZacCas()>=0 && t.getZacCas()<=endTimeNextDay){
+                        ret=true;
                     }
 
                 }

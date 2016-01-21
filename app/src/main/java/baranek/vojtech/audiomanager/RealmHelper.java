@@ -95,7 +95,7 @@ public class RealmHelper {
                 query.or();
         }
         query.endGroup();
-        query.between("zacCas", timerProfile.getZacCas() - 1, timerProfile.getZacCas() + casDoKonce );
+        query.between("zacCas", timerProfile.getZacCas() , timerProfile.getZacCas() + casDoKonce );
 
 
 

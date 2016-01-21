@@ -16,4 +16,6 @@ public interface MainActivityPresenter {
     boolean setTimerProfileActive(TimerProfile timerProfile);
 
     void setTimerProfileInActive(int id);
+
+    void showWelcomeDialog();
 }

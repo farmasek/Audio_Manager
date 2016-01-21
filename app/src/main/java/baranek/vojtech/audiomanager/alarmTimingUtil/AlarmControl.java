@@ -81,6 +81,7 @@ public class AlarmControl {
         PendingIntent pintKon = PendingIntent.getBroadcast(c, 100, intentKon, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.cancel(pintKon);
+
         //Start new end alarm only if end is on
         if (nextTimer.isKonZap()) {
             long endReceiverTime = receiverTime + nextTimer.getCasDoKonce() * 60 * 1000;
@@ -90,8 +91,8 @@ public class AlarmControl {
             SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
             sharedPreferences.edit().putLong(TimerProfileKeys.KEY_KONTIMERECEIVEINMILLIS, endReceiverTime).apply();
 
-
         }
+
 
     }
 

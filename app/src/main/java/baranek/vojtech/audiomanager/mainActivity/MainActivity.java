@@ -24,6 +24,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import baranek.vojtech.audiomanager.MyPreferenceActivity;
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.RealmHelper;
@@ -235,5 +237,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void showToastMessage(String msg) {
         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showWelcomeDialog(String msg) {
+
+        new MaterialDialog.Builder(this)
+                .title(R.string.welcome_dialog_title)
+                .content(msg)
+                .positiveText("Ok")
+                .show();
+
     }
 }

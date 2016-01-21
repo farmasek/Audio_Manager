@@ -16,5 +16,7 @@ public class TimerProfileKeys {
 
     public static final String INTENT_FILTER_KEY="baranek.vojtech.audiomanager.intentFilterRefreshRecyclerViewFromNotif";
 
+    public static final String KEY_FIRSTRUN="firstRunShpreff";
+
 
 }
