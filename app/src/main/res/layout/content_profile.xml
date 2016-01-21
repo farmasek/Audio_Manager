@@ -53,7 +53,7 @@
                         android:clickable="true"
                         android:gravity="center"
                         android:focusable="true"
-                        android:text="99:99"
+                        android:text="@string/random_time_value"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_marginRight="-8dp"
                         android:layout_marginTop="-8dp"
@@ -239,7 +239,7 @@
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
                         android:gravity="center"
-                        android:text="99:99"
+                        android:text="@string/random_time_value"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_marginTop="-8dp"
                         android:layout_marginRight="-8dp"
@@ -390,118 +390,6 @@
                 <include layout="@layout/togglebuttons_days" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
-        <!-- BT/WIFI NASTAVENI-->
-        <!--<android.support.v7.widget.CardView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--card_view:cardCornerRadius="4dp">-->
-
-        <!--<LinearLayout-->
-
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/ostatní"-->
-        <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
-
-        <!--<include layout="@layout/separator" />-->
-
-        <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/lv_item_height">-->
-
-        <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/bluetooth"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
-        <!--android:layout_alignParentLeft="true"/>-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!-->-->
-        <!--<Switch-->
-        <!--android:id="@+id/Switchbt"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textOn="on"-->
-        <!--android:textOff="off"-->
-        <!--android:layout_marginRight="16dp"-->
-
-        <!--/>-->
-        <!--<CheckBox-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--/>-->
-        <!--</LinearLayout>-->
-
-        <!--</RelativeLayout>-->
-
-
-        <!--&lt;!&ndash; WIFI&ndash;&gt;-->
-        <!--<include layout="@layout/separator"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--/>-->
-
-        <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/lv_item_height">-->
-
-        <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/wifi"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
-        <!--android:layout_alignParentLeft="true"/>-->
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!-->-->
-        <!--<Switch-->
-        <!--android:id="@+id/Switchwifi"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textOn="on"-->
-        <!--android:textOff="off"-->
-        <!--android:layout_marginRight="16dp"-->
-
-        <!--/>-->
-        <!--<CheckBox-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--/>-->
-        <!--</LinearLayout>-->
-
-        <!--</RelativeLayout>-->
-
-        <!--</LinearLayout>-->
-
-
-        <!--</android.support.v7.widget.CardView>-->
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

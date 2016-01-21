@@ -33,7 +33,7 @@ public class NotificationHelper {
      */
     public static void showNotification(Context c, long receiveTime) {
 
-        String strNextTime = getStringForNextDayFromReceiveTime(receiveTime);
+        String strNextTime = getStringForNextDayFromReceiveTime(receiveTime,c);
 
         SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
         boolean isEnable = sharedPreferences.getBoolean("isNotifEnable",true);
@@ -42,14 +42,12 @@ public class NotificationHelper {
         //Intent for Turn off one timer button
         Intent notifIntentVyp = new Intent(c, NotificationReceiver.class);
         notifIntentVyp.setAction(TimerProfileKeys.KEY_NOTIFVYPONETIMER);
-        //  notifIntentVyp.putExtra(TimerProfileKeys.KEY_NOTIVYPSTATE,1);
         PendingIntent notifPIntVyp = PendingIntent.getBroadcast(c, 9, notifIntentVyp, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         //Intent for turn off all timers button
         Intent notifIntentVypAll = new Intent(c, NotificationReceiver.class);
         notifIntentVypAll.setAction(TimerProfileKeys.KEY_NOTIFVYPALLTIMERS);
-        //   notifIntentVyp.putExtra(TimerProfileKeys.KEY_NOTIVYPSTATE,2);
         PendingIntent notifPIntentVypAll = PendingIntent.getBroadcast(c, 9, notifIntentVypAll, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Intent for Notification click
@@ -83,21 +81,10 @@ public class NotificationHelper {
                 notBuilder.setSmallIcon(android.R.color.transparent);
             }
 
-   /* Notification notification = new Notification.Builder(c)
-            .setSmallIcon(R.mipmap.app_launcehr_custom)
-            .setContentTitle(c.getResources().getString(R.string.app_name))
-            .setContentText(strNextTime)
-            .setContentIntent(mainActivityNotifPInt)
-            .addAction(R.drawable.ic_skip_next_black_24dp, "Vyp", notifPIntVyp)
-            .addAction(R.drawable.ic_clear_black_24dp, "Vyp vše", notifPIntentVypAll).build();
-
-*/
             Notification notification = notBuilder.build();
-
             notification.priority=Notification.PRIORITY_LOW;
-        NotificationManager notificationManager = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(Notification_ID, notification);
+            NotificationManager notificationManager = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(Notification_ID, notification);
 
     }}
 
@@ -107,12 +94,12 @@ public class NotificationHelper {
      * @param receiveTimeInMillis receive time in millis
      * @return String of next timer time
      */
-    public static String getStringForNextDayFromReceiveTime(long receiveTimeInMillis) {
+    public static String getStringForNextDayFromReceiveTime(long receiveTimeInMillis, Context c) {
         String ret;
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(receiveTimeInMillis);
 
-        ret = "Další změna v " + getDayLongShortcut(cal.get(Calendar.DAY_OF_WEEK)) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + TimerProfileHelper.getZeroBeforMinute(cal.get(Calendar.MINUTE));
+        ret = c.getString(R.string.next_change) + getDayLongShortcut(cal.get(Calendar.DAY_OF_WEEK),c) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + TimerProfileHelper.getZeroBeforMinute(cal.get(Calendar.MINUTE));
         return ret;
 
     }
@@ -123,30 +110,30 @@ public class NotificationHelper {
      * @param dayOfWeek int day of week
      * @return string day of week
      */
-    private static String getDayLongShortcut(int dayOfWeek) {
+    private static String getDayLongShortcut(int dayOfWeek, Context c) {
 
         String ret = null;
         switch (dayOfWeek) {
             case Calendar.SUNDAY:
-                ret = "Ne";
+                ret = c.getString(R.string.Nedele);
                 break;
             case Calendar.MONDAY:
-                ret = "Po";
+                ret = c.getString(R.string.Pondeli);
                 break;
             case Calendar.TUESDAY:
-                ret = "Út";
+                ret = c.getString(R.string.Utery);
                 break;
             case Calendar.WEDNESDAY:
-                ret = "St";
+                ret = c.getString(R.string.Streda);
                 break;
             case Calendar.THURSDAY:
-                ret = "Čt";
+                ret = c.getString(R.string.Ctvrtek);
                 break;
             case Calendar.FRIDAY:
-                ret = "Pá";
+                ret = c.getString(R.string.Patek);
                 break;
             case Calendar.SATURDAY:
-                ret = "So";
+                ret = c.getString(R.string.Sobota);
                 break;
         }
 

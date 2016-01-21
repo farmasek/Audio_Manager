@@ -31,7 +31,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
      */
     @Override
     public TimerProfile getDefaultTimerProfile() {
-        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), "Ukazkovy casovac", TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6, 5, 4, true, "MTW", false);
+        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), profileActivityView.getContext().getString(R.string.default_timer_name), TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 1, 2, 3, 4, 5, 6, 5, 4, true, "MTW", false);
         return timer;
     }
 
@@ -88,7 +88,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
      */
     @Override
     public void setEndTextString(TimerProfile timerProfile) {
-        String formatedEndTime = TimerProfileHelper.getFormatedEndTime(timerProfile);
+        String formatedEndTime = TimerProfileHelper.getFormatedEndTime(timerProfile,profileActivityView.getContext());
         profileActivityView.setTimePickerEndTime(formatedEndTime);
 
     }
@@ -164,7 +164,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
         boolean run = false;
         if (id == -1) {
             if (timerProfile.getDny().equals("")) {
-                profileActivityView.showErrorSnackBar("Musí být vybrány dny");
+                profileActivityView.showErrorSnackBar(profileActivityView.getContext().getString(R.string.day_must_be_chosen));
             } else {
                 putIntoDatabase(timerProfile);
                 profileActivityView.finishView();
@@ -172,7 +172,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
             }
         } else {
             if (timerProfile.getDny().equals("")) {
-                profileActivityView.showErrorSnackBar("Musí být vybrány dny");
+                profileActivityView.showErrorSnackBar(profileActivityView.getContext().getString(R.string.day_must_be_chosen));
             } else {
                 editIteminDatabase(timerProfile);
                 profileActivityView.finishView();

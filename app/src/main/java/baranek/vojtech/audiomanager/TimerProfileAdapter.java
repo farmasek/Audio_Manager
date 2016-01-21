@@ -67,7 +67,7 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
             holder.rvKonRez.setVisibility(View.VISIBLE);
             holder.rvKonHlas.setVisibility(View.VISIBLE);
             holder.rvKonIW.setImageDrawable(getDrawableForIw(timerProfile.getKonRez()));
-            holder.rvKonTime.setText(TimerProfileHelper.getFormatedEndTime(timerProfile));
+            holder.rvKonTime.setText(TimerProfileHelper.getFormatedEndTime(timerProfile, mainActivityPresenter.getContext()));
             holder.rvKonRez.setText(getTimeFromRez(timerProfile.getKonRez()));
             setVolumeTextview(holder.rvKonHlas, timerProfile.getKonRez(), timerProfile.getKonVyzvaneni(), timerProfile.getKonMedia(), timerProfile.getKonOzn(), timerProfile.getKonAlarm());
         }
@@ -88,16 +88,23 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
 
         StringBuilder ret = new StringBuilder();
 
-        if (strDays.contains("M"))ret.append("Po ");
-        if (strDays.contains("T"))ret.append("Út ");
-        if (strDays.contains("W"))ret.append("St ");
-        if (strDays.contains("R"))ret.append("Čt ");
-        if (strDays.contains("F"))ret.append("Pá ");
-        if (strDays.contains("U"))ret.append("So ");
-        if (strDays.contains("S"))ret.append("Ne ");
+        if (strDays.contains("M"))
+            ret.append(mainActivityPresenter.getContext().getString(R.string.Pondeli)).append(" ");
+        if (strDays.contains("T"))
+            ret.append(mainActivityPresenter.getContext().getString(R.string.Utery)).append(" ");
+        if (strDays.contains("W"))
+            ret.append(mainActivityPresenter.getContext().getString(R.string.Streda)).append(" ");
+        if (strDays.contains("R"))
+            ret.append(mainActivityPresenter.getContext().getString(R.string.Ctvrtek)).append(" ");;
+        if (strDays.contains("F"))
+            ret.append(mainActivityPresenter.getContext().getString(R.string.Patek)).append(" ");
+        if (strDays.contains("U"))
+            ret.append(mainActivityPresenter.getContext().getString(R.string.Sobota)).append(" ");
+        if (strDays.contains("S"))
+            ret.append(mainActivityPresenter.getContext().getString(R.string.Nedele)).append(" ");
 
         if(ret.toString().equals(""))
-            ret.append("Nezadáno");
+            ret.append(mainActivityPresenter.getContext().getString(R.string.nezadan_den));
 
         return ret.toString();
     }
@@ -107,7 +114,11 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
         if (zacRez==0)
         {
             rvZacHlas.setVisibility(View.VISIBLE);
-           rvZacHlas.setText("Vyz - "+ Vyz + " / Méd - " + Med + " /Ozn - " +Ozn + " / Alarm - "+ Alarm);
+           rvZacHlas.setText(mainActivityPresenter.getContext().getString(R.string.short_vyzv)
+                   + Vyz + " / "
+                   + mainActivityPresenter.getContext().getString(R.string.short_med) + Med + " /"
+                   + mainActivityPresenter.getContext().getString(R.string.short_ozn) + Ozn + " /"
+                   + mainActivityPresenter.getContext().getString(R.string.short_alarm) +Alarm );
         }
         else{
             rvZacHlas.setVisibility(View.GONE);
@@ -120,15 +131,15 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
         String ret = null;
         switch (zacRez) {
             case 0:
-                ret = "Vlastní";
+                ret = mainActivityPresenter.getContext().getString(R.string.vlastni_rezim);
                 break;
 
             case 1:
-                ret = "Tichý";
+                ret = mainActivityPresenter.getContext().getString(R.string.tichy_rezim);
                 break;
 
             case 2:
-                ret = "Vibrace";
+                ret = mainActivityPresenter.getContext().getString(R.string.vibrace_rezim);
                 break;
         }
         return  ret;

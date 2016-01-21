@@ -1,5 +1,9 @@
 package baranek.vojtech.audiomanager.model;
 
+import android.content.Context;
+
+import baranek.vojtech.audiomanager.R;
+
 /**
  * Created by Farmas on 22.11.2015.
  */
@@ -17,14 +21,14 @@ public class TimerProfileHelper {
         return hod + ":" + getZeroBeforMinute(min);
     }
 
-    public static String getFormatedEndTime(TimerProfile timerProfile) {
+    public static String getFormatedEndTime(TimerProfile timerProfile, Context c) {
         String formatedTime;
         int endTime = timerProfile.getZacCas() + timerProfile.getCasDoKonce();
 
         if (endTime > (1440)) {
             endTime = endTime - 1440;
 
-            formatedTime = "Další den " + _getTimeString(endTime / 60, endTime % 60);
+            formatedTime = c.getString(R.string.next_day) + _getTimeString(endTime / 60, endTime % 60);
         } else {
             formatedTime = _getTimeString(endTime / 60, endTime % 60);
         }

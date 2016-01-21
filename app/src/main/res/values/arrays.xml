@@ -2,14 +2,14 @@
 <resources>
 
     <string-array name="sound_modes">
-        <item>Vlastní režim</item>
-        <item>Tichý režim</item>
-        <item>Režim Vibrace</item>
+        <item>@string/vlastni_rezim_long</item>
+        <item>@string/tichy_rezim_long</item>
+        <item>@string/rezim_vibrace_long</item>
     </string-array>
 
     <string-array name="prefs_notif_slideable_name">
-        <item>Neodstranitelná</item>
-        <item>Odstranitelná</item>
+        <item>@string/neodstranitelna</item>
+        <item>@string/odstranitelna</item>
      </string-array>
 
     <string-array name="prefs_notifs_slideable_values">
@@ -17,6 +17,7 @@
         <item>1</item>
 
     </string-array>
+
 
 
 </resources>

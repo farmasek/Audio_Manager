@@ -23,7 +23,7 @@
                 android:id="@+id/rv_itemNazev"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nazev"
+                android:text="@string/nazev"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <android.support.v7.widget.SwitchCompat
@@ -68,7 +68,6 @@
             android:id="@+id/rv_zacHlasitost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ozn - 5 / Vyz - 13 / Med - 6 / Alarm - 3 "
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <android.support.v7.widget.LinearLayoutCompat

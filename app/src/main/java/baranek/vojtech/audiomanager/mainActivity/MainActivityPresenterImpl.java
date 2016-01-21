@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmCollisionChecker;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.RealmHelper;
@@ -41,7 +42,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
         boolean ret;
         boolean collisionWithTimerProfiles = AlarmCollisionChecker.isCollisionWithTimerProfiles(timerProfile, getContext());
         if (collisionWithTimerProfiles) {
-            mainActivityView.showToastMessage("Časovač není možno zapnout, je v koklizi s jiným.");
+            mainActivityView.showToastMessage(getContext().getString(R.string.timer_collision));
             rh.setTimerActivity(timerProfile.getId(), false);
             ret = false;
         } else {
