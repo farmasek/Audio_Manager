@@ -7,16 +7,11 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +27,6 @@ import baranek.vojtech.audiomanager.RealmHelper;
 import baranek.vojtech.audiomanager.TimerProfileAdapter;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
-import baranek.vojtech.audiomanager.profileActivity.ProfileActivity;
 import baranek.vojtech.audiomanager.volumeChangeManager.AndroidProfileChanger;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -191,6 +185,13 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
             return true;
         }
+        if (id == R.id.action_email) {
+            Intent intent = mainActivityPresenter.openEmailIntent();
+            if (intent!=null){
+                startActivity(intent);
+            }
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -203,22 +204,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camara) {
-            RealmResults<TimerProfile> timerProfiles = realmHelper.getRealmResults();
-            timerProfileAdapter = new TimerProfileAdapter(timerProfiles,mainActivityPresenter);
-            recyclerViewShowData.setAdapter(timerProfileAdapter);
 
         } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -240,11 +228,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void showWelcomeDialog(String msg) {
+    public void showWelcomeDialog(int msg) {
 
         new MaterialDialog.Builder(this)
                 .title(R.string.welcome_dialog_title)
-                .content(msg)
+                .content(getText(msg))
                 .positiveText("Ok")
                 .show();
 

@@ -3,6 +3,7 @@ package baranek.vojtech.audiomanager.mainActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmCollisionChecker;
@@ -25,13 +26,16 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
         this.mainActivityView = mainActivityView;
         //Show dialog for first start or update
         SharedPreferences sharedPreferences = mainActivityView.getContext().getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
+        //change number for every update
         if (sharedPreferences.getInt(TimerProfileKeys.KEY_FIRSTRUN,0)==0)
         {
+            AlarmControl.runNextTimer(getContext());
             showWelcomeDialog();
             //Create new timer for first application start
            if(sharedPreferences.getInt(TimerProfileKeys.KEY_FIRSTRUN,0)==0){
             _createDefaultTimer();
         }
+
         }
         //Change version for update, 0 = first start
         sharedPreferences.edit().putInt(TimerProfileKeys.KEY_FIRSTRUN,1).apply();
@@ -74,7 +78,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
             rh.setTimerActivity(timerProfile.getId(), true);
             //Start next Timer
             AlarmControl.runNextTimer(getContext());
-          //  mainActivityView.showToastMessage("Časovač zapnut");
+
             ret = true;
         }
 
@@ -91,6 +95,17 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
 
     @Override
     public void showWelcomeDialog() {
-        mainActivityView.showWelcomeDialog("Welcome gagaga adííšfkak é+é+ fakkaé ty for downloading");
+        mainActivityView.showWelcomeDialog(R.string.update_string);
+    }
+
+    @Override
+    public Intent openEmailIntent() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:vojtabaranek@gmail.com")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(R.string.app_name));
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            return intent;
+        }
+        return null;
     }
 }

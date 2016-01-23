@@ -174,6 +174,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileActivit
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        profileActivityPresenter.searchNextTimer();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         profileActivityPresenter.closeRealm();

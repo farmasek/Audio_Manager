@@ -46,4 +46,6 @@ public interface ProfileActivityPresenter {
     String[] getRezimy();
 
     void deleteTimer(int id);
+
+    void searchNextTimer();
 }

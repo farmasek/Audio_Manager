@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Plánovač hlasitosti</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="Pondeli">Po</string>
+    <string name="Utery">Út</string>
+    <string name="Streda">St</string>
+    <string name="Ctvrtek">Čt</string>
+    <string name="Patek">Pá</string>
+    <string name="Sobota">So</string>
+    <string name="Nedele">Ne</string>
+    <string name="select_mode_dialo_title">Vyber režim</string>
+    <string name="strZacatek">Začátek</string>
+    <string name="nastavRezim">Nastavit režim</string>
+    <string name="hlasitost">Hlasitost</string>
+    <string name="konec">Konec</string>
+    <string name="opakovani">Opakování</string>
+    <string name="ostatní">Ostatní</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="media">Hudba, video, hry a další média</string>
+    <string name="vyzvaneni">Vyzvánění a oznámení</string>
+    <string name="alarm">Budíky</string>
+    <string name="nazev">Název</string>
+    <string name="ukazkovy_casovac">Ukazkovy casovac</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+
+
+
+
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="same_time_error">Časy nemohou být stejné</string>
+    <string name="notif">Oznámení</string>
+    <string name="str_create_profil">Tvorba profilu</string>
+    <string name="str_edit_profil">Úprava profilu</string>
+    <string name="prof_et_name">Nazev</string>
+    <string name="random_time_value">99:99</string>
+    <string name="timer_collision">Časovač není možno zapnout, je v koklizi s jiným.</string>
+    <string name="next_day">Další den\u0020 </string>
+    <string name="next_change">Další změna v\u0020 </string>
+    <string name="day_must_be_chosen">Musí být vybrány dny</string>
+    <string name="nezadan_den">Nezadáno</string>
+    <string name="short_vyzv">Vyzv - \u0020</string>
+    <string name="short_med">Méd - \u0020</string>
+    <string name="short_ozn">Ozn - \u0020</string>
+    <string name="short_alarm">Budík -\u0020</string>
+    <string name="vlastni_rezim">Vlastní</string>
+    <string name="tichy_rezim">Tichý</string>
+    <string name="vibrace_rezim">Vibrace</string>
+    <string name="notification_settings_long">Nemá-li váš telefon možnost nastavit ručně hlasitost oznámení, vypněte tuto možnost.</string>
+    <string name="notification_settings_short">Hlasitost oznámení</string>
+    <string name="allow_notif_on_lockscreen_long">Povolení zobrazení oznámení na zamykací obrazovce a stavové liště.</string>
+    <string name="allow_notif_on_lockscreen_short">Zapnout notifikace</string>
+    <string name="notif_remove_option">Možnost odstranění notifikace</string>
+    <string name="allow_notif_icon_long">Povolit zobrazit ikonu v horní liště notifikací</string>
+    <string name="allow_notif_icon_short">Zobrazit ikonu</string>
+    <string name="vlastni_rezim_long">Vlastní režim</string>
+    <string name="tichy_rezim_long">Tichý režim</string>
+    <string name="rezim_vibrace_long">Režim Vibrace</string>
+    <string name="neodstranitelna">Neodstranitelná</string>
+    <string name="odstranitelna">Odstranitelná</string>
+    <string name="default_timer_name">Úkázkový časovač</string>
+    <string name="welcome_dialog_title">Vítejte</string>
+    <string name="action_email">Kontakt</string>
+    <string name="next_change_from_now">Další změna profilu za: \u0020</string>
+    <string name="update_string"><b>Úvod:</b>\n
+    Aplikace slouží k plánováni změn hlasitosti.
+    Řešení každodeního ztlumování a zesilování
+    zvuků před školou či prací.\n\n
+    <i>V případě jakékoliv chyby mě neváhejte kontaktovat.</i>
+    \n\n
+    © Vojtěch Baránek</string>
+</resources>

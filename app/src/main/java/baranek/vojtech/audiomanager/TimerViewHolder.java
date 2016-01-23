@@ -55,7 +55,7 @@ public class TimerViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mainActivityPresenter.setTimerProfileInActive(timerProfileList.get(getAdapterPosition()).getId());
+         //   mainActivityPresenter.setTimerProfileInActive(timerProfileList.get(getAdapterPosition()).getId());
             mainActivityPresenter.startTimerProfileActivity(timerProfileList.get(getAdapterPosition()).getId());
 
             }

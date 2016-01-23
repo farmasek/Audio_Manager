@@ -17,6 +17,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
 
     public ProfileActivityView profileActivityView;
     private RealmHelper realmHelper;
+    private boolean searchNextTimer = false;
 
     public ProfileActivityPresenterImpl(ProfileActivityView profileActivityView) {
 
@@ -160,8 +161,13 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
     @Override
     public void profileActivityButtonClick(TimerProfile timerProfile, int id) {
 
+        if (id!=-1){
+         AlarmControl.turnOffTimerWithoutSearchingNext(id,profileActivityView.getContext());
+            searchNextTimer=true;
+        }
+
         timerProfile.setIsTimerZap(!AlarmCollisionChecker.isCollisionWithTimerProfiles(timerProfile, profileActivityView.getContext()));
-       // timerProfile.setIsTimerZap(false);
+
         boolean run = false;
         if (id == -1) {
             if (timerProfile.getDny().equals("")) {
@@ -170,7 +176,7 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
                 putIntoDatabase(timerProfile);
                 profileActivityView.finishView();
                 run=true;
-             //   AlarmControl.runNextTimer(profileActivityView.getContext());
+
             }
         } else {
             if (timerProfile.getDny().equals("")) {
@@ -179,11 +185,12 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
                 editIteminDatabase(timerProfile);
                 profileActivityView.finishView();
                 run=true;
-           //     AlarmControl.runNextTimer(profileActivityView.getContext());
+
             }
         }
 
         if (timerProfile.isTimerZap()&&run) {
+            searchNextTimer=false;
             AlarmControl.runNextTimer(profileActivityView.getContext());
         }
     }
@@ -217,5 +224,12 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
         AlarmControl.turnOffTimer(id,profileActivityView.getContext());
         realmHelper.deleteTimerFromRealm(id);
 
+    }
+
+    @Override
+    public void searchNextTimer() {
+        if (searchNextTimer){
+        searchNextTimer=false;
+        AlarmControl.runNextTimer(profileActivityView.getContext());}
     }
 }

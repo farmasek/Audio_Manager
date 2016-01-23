@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.notifications.NotificationHelper;
 import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 import baranek.vojtech.audiomanager.volumeChangeManager.AlarmReceiver;
@@ -36,6 +37,7 @@ public class AlarmControl {
         TimerProfile nextTimer = alarmControlHelper.getTimerProfile();
         long receiverTime = alarmControlHelper.getNextAlarmTime();
 
+
         if (nextTimer != null) {
 
 
@@ -50,11 +52,14 @@ public class AlarmControl {
                 startEndTimer(c, nextTimer, receiverTime);
 
                 long timeToGo = receiverTime - Calendar.getInstance().getTimeInMillis();
-                Toast.makeText(c, convertTimeToReceiveToString(timeToGo), Toast.LENGTH_SHORT).show();
+                Toast.makeText(c, convertTimeToReceiveToString(timeToGo,c), Toast.LENGTH_SHORT).show();
 
             }
         }
 
+        if (nextTimer==null){
+            stopBothTimers(c);
+        }
     }
 
     public static void stopBothTimers(Context c) {
@@ -138,7 +143,7 @@ public class AlarmControl {
 
         timer = findIfThereIsTimerForThisTime(currTimeInMinutes / 60, strDayOfWeek, c);
         //run timer if there is active timer for actual time
-        //TODO test iteraction with other searching
+
         if (timer != null) {
 
             cal.set(Calendar.HOUR_OF_DAY, timer.getZacCas() / 60);
@@ -151,7 +156,7 @@ public class AlarmControl {
             SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
             sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID, timer.getId()).apply();
             sharedPreferences.edit().putLong(TimerProfileKeys.KEY_KONTIMERECEIVEINMILLIS, receiverTime);
-            NotificationHelper.showNotification(c,receiverTime);
+            NotificationHelper.showNotification(c, receiverTime);
 
 
         } else {
@@ -288,36 +293,41 @@ public class AlarmControl {
      * @return String of time to start
      */
 
-    public static String convertTimeToReceiveToString(long timeToReceiveInMilis) {
+    public static String convertTimeToReceiveToString(long timeToReceiveInMilis, Context c) {
         int hod, min;
         int timeToReceiveInMinutes = (int) (timeToReceiveInMilis / 1000 / 60);
         min = timeToReceiveInMinutes % 60;
         hod = timeToReceiveInMinutes / 60;
 
-        String ret = "Další změna profilu za: " + hod + ":" + TimerProfileHelper.getZeroBeforMinute(min);
+        String ret = c.getString(R.string.next_change_from_now) + hod + ":" + TimerProfileHelper.getZeroBeforMinute(min);
 
         return ret;
 
     }
 
-    public static void turnOffTimer(int id,Context c) {
-        SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME,Context.MODE_PRIVATE);
+    public static void turnOffTimer(int id, Context c) {
+        turnOffTimerWithoutSearchingNext(id, c);
+        AlarmControl.runNextTimer(c);
+    }
+
+    public static void turnOffTimerAssync(int id, Context c) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
+
+        RealmHelper rh = new RealmHelper(c);
+        rh.setTimerActivityAssyncAndStartNext(id, false, c);
+        //if turning off active timer, change active id
+        if (id == sharedPreferences.getInt(TimerProfileKeys.KEY_ID, -1))
+            sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID, -1).apply();
+    }
+
+    public static void turnOffTimerWithoutSearchingNext(int id, Context c) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
 
         RealmHelper rh = new RealmHelper(c);
         rh.setTimerActivity(id, false);
         //if turning off active timer, change active id
-        if (id== sharedPreferences.getInt(TimerProfileKeys.KEY_ID,-1))
-            sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID,-1).apply();
-        AlarmControl.runNextTimer(c);
+        if (id == sharedPreferences.getInt(TimerProfileKeys.KEY_ID, -1))
+            sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID, -1).apply();
+
     }
-
-    public static void turnOffTimerAssync(int id,Context c) {
-        SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME,Context.MODE_PRIVATE);
-
-        RealmHelper rh = new RealmHelper(c);
-        rh.setTimerActivityAssyncAndStartNext(id, false,c);
-        //if turning off active timer, change active id
-        if (id== sharedPreferences.getInt(TimerProfileKeys.KEY_ID,-1))
-            sharedPreferences.edit().putInt(TimerProfileKeys.KEY_ID,-1).apply();
-           }
 }

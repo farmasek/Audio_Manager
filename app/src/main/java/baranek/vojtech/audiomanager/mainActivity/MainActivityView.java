@@ -14,5 +14,5 @@ public interface MainActivityView {
 
     void showToastMessage(String msg);
 
-    void showWelcomeDialog(String msg);
+    void showWelcomeDialog(int msg);
 }

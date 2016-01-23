@@ -1,6 +1,7 @@
 package baranek.vojtech.audiomanager.mainActivity;
 
 import android.content.Context;
+import android.content.Intent;
 
 import baranek.vojtech.audiomanager.model.TimerProfile;
 
@@ -18,4 +19,6 @@ public interface MainActivityPresenter {
     void setTimerProfileInActive(int id);
 
     void showWelcomeDialog();
+
+    Intent openEmailIntent();
 }
