@@ -90,7 +90,7 @@ public class AlarmControl {
         //Start new end alarm only if end is on
         if (nextTimer.isKonZap()) {
             long endReceiverTime = receiverTime + nextTimer.getCasDoKonce() * 60 * 1000;
-            alarmManager.set(AlarmManager.RTC, endReceiverTime, pintKon);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, endReceiverTime, pintKon);
 
             //Save end ReceiverTime for notifications
             SharedPreferences sharedPreferences = c.getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
@@ -111,7 +111,7 @@ public class AlarmControl {
 
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pint);
-        alarmManager.set(AlarmManager.RTC, receiverTime, pint);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, receiverTime, pint);
 
         //Notification
 

@@ -7,7 +7,11 @@
         android:summary="@string/notification_settings_long"
         android:title="@string/notification_settings_short" />
 
-    <PreferenceCategory android:title="Notifikace">
+    <PreferenceCategory android:title="@string/notofication_title">
+
+        <Preference
+            android:selectable="false"
+            android:summary="@string/notif_show_change"/>
 
         <SwitchPreference
             android:defaultValue="true"

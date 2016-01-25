@@ -1,5 +1,7 @@
 package baranek.vojtech.audiomanager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import baranek.vojtech.audiomanager.mainActivity.MainActivityPresenter;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileHelper;
+import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
@@ -53,16 +56,16 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //Control for automatic change while initialize
-                if (buttonView.isPressed()){
-                if (isChecked){
-                    boolean b = mainActivityPresenter.setTimerProfileActive(timerProfile);
-                   if (!b) holder.rvSwitchZap.setChecked(b);
+                if (buttonView.isPressed()) {
+                    if (isChecked) {
+                        boolean b = mainActivityPresenter.setTimerProfileActive(timerProfile);
+                        if (!b) holder.rvSwitchZap.setChecked(b);
 
 
-                }else{
-                    mainActivityPresenter.setTimerProfileInActive(timerProfile.getId());
+                    } else {
+                        mainActivityPresenter.setTimerProfileInActive(timerProfile.getId());
 
-                }
+                    }
                 }
 
             }
@@ -119,14 +122,23 @@ public class TimerProfileAdapter extends RecyclerView.Adapter<TimerViewHolder> {
 
     private void setVolumeTextview(TextView rvZacHlas, int zacRez, int Vyz, int Med, int Ozn, int Alarm) {
 
+        SharedPreferences sharedPreferences = mainActivityPresenter.getContext().getSharedPreferences(TimerProfileKeys.KEY_PREFERENCENAME, Context.MODE_PRIVATE);
+
+
         if (zacRez==0)
         {
+
+            StringBuilder text = new StringBuilder();
+            text.append(mainActivityPresenter.getContext().getString(R.string.short_vyzv)).append(Vyz).append(" / ");
+            text.append(mainActivityPresenter.getContext().getString(R.string.short_med)).append(Med).append(" / ");
+
+          if (sharedPreferences.getBoolean(TimerProfileKeys.KEY_ISNOTIFACTIVE, true))
+            text.append(mainActivityPresenter.getContext().getString(R.string.short_ozn)).append(Ozn).append(" / ");
+
+            text.append(mainActivityPresenter.getContext().getString(R.string.short_alarm)).append(Alarm);
+
             rvZacHlas.setVisibility(View.VISIBLE);
-           rvZacHlas.setText(mainActivityPresenter.getContext().getString(R.string.short_vyzv)
-                   + Vyz + " / "
-                   + mainActivityPresenter.getContext().getString(R.string.short_med) + Med + " /"
-                   + mainActivityPresenter.getContext().getString(R.string.short_ozn) + Ozn + " /"
-                   + mainActivityPresenter.getContext().getString(R.string.short_alarm) +Alarm );
+           rvZacHlas.setText(text.toString());
         }
         else{
             rvZacHlas.setVisibility(View.GONE);

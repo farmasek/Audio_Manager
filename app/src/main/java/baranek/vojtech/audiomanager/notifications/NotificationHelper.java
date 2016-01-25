@@ -60,8 +60,8 @@ public class NotificationHelper {
         notBuilder.setContentTitle(c.getResources().getString(R.string.app_name));
         notBuilder.setContentText(strNextTime);
         notBuilder.setContentIntent(mainActivityNotifPInt);
-        notBuilder.addAction(R.drawable.ic_skip_next_black_24dp, "Vyp", notifPIntVyp);
-        notBuilder.addAction(R.drawable.ic_clear_black_24dp, "Vyp vše", notifPIntentVypAll);
+        notBuilder.addAction(R.drawable.ic_skip_next_black_24dp, c.getString(R.string.vyp), notifPIntVyp);
+        notBuilder.addAction(R.drawable.ic_clear_black_24dp, c.getString(R.string.vyp_vse), notifPIntentVypAll);
 
 
         //Preferences settings

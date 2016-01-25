@@ -38,7 +38,7 @@
     <string name="str_edit_profil">Úprava profilu</string>
     <string name="prof_et_name">Nazev</string>
     <string name="random_time_value">99:99</string>
-    <string name="timer_collision">Časovač není možno zapnout, je v koklizi s jiným.</string>
+    <string name="timer_collision">Časovač není možno zapnout, je v kolizi s jiným.</string>
     <string name="next_day">Další den\u0020 </string>
     <string name="next_change">Další změna v\u0020 </string>
     <string name="day_must_be_chosen">Musí být vybrány dny</string>
@@ -69,8 +69,15 @@
     <string name="update_string"><b>Úvod:</b>\n
     Aplikace slouží k plánováni změn hlasitosti.
     Řešení každodeního ztlumování a zesilování
-    zvuků před školou či prací.\n\n
+    zvuků před školou či prací.\n
+         <b>Tip:</b>\n
+    Jestliže tichý režim nefunguje na vašem zařízení podle představ,
+        využijte vlastí režim a nastavte hlasitosti na 0.\n\n
     <i>V případě jakékoliv chyby mě neváhejte kontaktovat.</i>
     \n\n
     © Vojtěch Baránek</string>
+    <string name="vyp">Vyp</string>
+    <string name="vyp_vse">Vyp vše</string>
+    <string name="notofication_title">Notifikace</string>
+    <string name="notif_show_change">Pro zobrazení změn, vypněte a zapněte profil</string>
 </resources>

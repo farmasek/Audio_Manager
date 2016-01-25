@@ -67,8 +67,14 @@
     <string name="action_email">Contact</string>
     <string name="next_change_from_now">Next profile change in: \u0020</string>
     <string name="update_string"><b>Introduction:</b>\n
-    Application for scheduling volume change. It\'s a solution for everyday volume changing before work or school.\n\n
+    Application for scheduling volume change. It\'s a solution for everyday volume changing before work or school.\n
+         <b>Tip:</b>\n
+    If silent mode doesn\'t work properly on your device, please use custom mode and set values to zero\n\n
     <i>In case of bug or failure, please contact me.</i>
     \n\n
     © Vojtěch Baránek</string>
+    <string name="vyp">Off</string>
+    <string name="vyp_vse">Off all</string>
+    <string name="notofication_title">Notifikace</string>
+    <string name="notif_show_change">To see changes, please turn off and back on profile</string>
 </resources>
