@@ -13,7 +13,7 @@ you can use notification.
 - Material design
 - Notification control
 
-![Main activity](http://s16.postimg.org/kf2wczmc1/device_2016_01_26_122641.png)
+![Main activity](http://i67.tinypic.com/30kdmr9.png)
 ![Create profile activity](http://postimg.org/image/6639ux7td)
 ![Notification](http://postimg.org/image/9qz5e5ccx)
 
