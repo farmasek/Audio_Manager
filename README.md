@@ -13,9 +13,6 @@ you can use notification.
 - Material design
 - Notification control
 
-![Main activity](http://i67.tinypic.com/30kdmr9.png)
-![Create profile activity](http://postimg.org/image/6639ux7td)
-![Notification](http://postimg.org/image/9qz5e5ccx)
 
 <img src="http://i67.tinypic.com/30kdmr9.png" width="30%"></img>
 <img src="http://i63.tinypic.com/doq4bp.png" width="30%"></img>
