@@ -65,7 +65,7 @@
     <string name="default_timer_name">Úkázkový časovač</string>
     <string name="welcome_dialog_title">Vítejte</string>
     <string name="action_email">Kontakt</string>
-    <string name="next_change_from_now">Další změna profilu za: \u0020</string>
+    <string name="next_change_from_now">Další změna profilu za \u0020</string>
     <string name="update_string"><b>Úvod:</b>\n
     Aplikace slouží k plánováni změn hlasitosti.
     Řešení každodeního ztlumování a zesilování
@@ -80,4 +80,5 @@
     <string name="vyp_vse">Vyp vše</string>
     <string name="notofication_title">Notifikace</string>
     <string name="notif_show_change">Pro zobrazení změn, vypněte a zapněte profil</string>
+    <string name="less_than_min">méně než minutu</string>
 </resources>

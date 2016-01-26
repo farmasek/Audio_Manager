@@ -65,7 +65,7 @@
     <string name="default_timer_name">Sample timer</string>
     <string name="welcome_dialog_title">Welcome</string>
     <string name="action_email">Contact</string>
-    <string name="next_change_from_now">Next profile change in: \u0020</string>
+    <string name="next_change_from_now">Next profile change in\u0020</string>
     <string name="update_string"><b>Introduction:</b>\n
     Application for scheduling volume change. It\'s a solution for everyday volume changing before work or school.\n
          <b>Tip:</b>\n
@@ -77,4 +77,5 @@
     <string name="vyp_vse">Off all</string>
     <string name="notofication_title">Notifikace</string>
     <string name="notif_show_change">To see changes, please turn off and back on profile</string>
+    <string name="less_than_min">less than a minute</string>
 </resources>

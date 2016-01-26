@@ -244,4 +244,17 @@ public class RealmHelper {
         return realmResult;
 
     }
+
+    public RealmResults<TimerProfile> getQueryResAllExceptCurrent(TimerProfile timerProfile) {
+
+        RealmResults<TimerProfile> realmResults;
+        RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
+
+        query.not().equalTo("id", timerProfile.getId());
+        query.equalTo("isTimerZap", true);
+        realmResults=query.findAll();
+        return realmResults;
+
+
+    }
 }

@@ -298,9 +298,13 @@ public class AlarmControl {
         int timeToReceiveInMinutes = (int) (timeToReceiveInMilis / 1000 / 60);
         min = timeToReceiveInMinutes % 60;
         hod = timeToReceiveInMinutes / 60;
-
-        String ret = c.getString(R.string.next_change_from_now) + hod + ":" + TimerProfileHelper.getZeroBeforMinute(min);
-
+        String ret;
+        if (hod==0 && min ==0){
+            ret = c.getString(R.string.next_change_from_now) + c.getString(R.string.less_than_min);
+        }
+        else {
+           ret = c.getString(R.string.next_change_from_now) + hod + ":" + TimerProfileHelper.getZeroBeforMinute(min);
+        }
         return ret;
 
     }

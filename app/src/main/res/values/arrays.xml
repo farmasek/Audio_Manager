@@ -12,7 +12,8 @@
         <item>@string/odstranitelna</item>
      </string-array>
 
-    <string-array name="prefs_notifs_slideable_values">
+    <string-array name="prefs_notifs_slideable_values"
+        translatable="false">
         <item>0</item>
         <item>1</item>
 
