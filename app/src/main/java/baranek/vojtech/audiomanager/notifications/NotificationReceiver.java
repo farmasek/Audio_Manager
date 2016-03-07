@@ -8,7 +8,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.Calendar;
 
-import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.model.RealmHelper;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;

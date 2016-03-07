@@ -1,4 +1,4 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.mainActivity;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.mainActivity.MainActivityPresenter;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import io.realm.RealmResults;

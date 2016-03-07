@@ -6,7 +6,7 @@ import android.media.AudioManager;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmCollisionChecker;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.R;
-import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.model.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 
@@ -32,7 +32,11 @@ public class ProfileActivityPresenterImpl implements ProfileActivityPresenter {
      */
     @Override
     public TimerProfile getDefaultTimerProfile() {
-        TimerProfile timer = new TimerProfile(realmHelper.getNextRealmId(), profileActivityView.getContext().getString(R.string.default_timer_name), TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 5, 4, 3, 4, 5, 3, 3, 3, true, "MTW", false);
+        TimerProfile timer = new TimerProfile(
+                realmHelper.getNextRealmId(),
+                profileActivityView.getContext().getString(R.string.default_timer_name),
+                TimerProfileHelper.getCasFromHodMin(15, 35), 120, 0, 1, 5, 4, 3, 4, 5, 3, 3, 3,
+                true, "MTW", false);
         return timer;
     }
 

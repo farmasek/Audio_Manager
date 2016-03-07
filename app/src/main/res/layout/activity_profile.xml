@@ -51,10 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
-                android:theme="@style/TextInputLabel"
+                android:theme="@style/TextInputLabel">
 
-
-                >
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/et_TimerName"
                     android:layout_width="match_parent"

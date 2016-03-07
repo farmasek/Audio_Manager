@@ -1,4 +1,4 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.model;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,15 +36,12 @@ public class RealmHelper {
     }
 
     public  void insertTimerProfileIntoRealm( final TimerProfile timerProfile){
-
-
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 TimerProfile realmTimerProfile = realm.copyToRealm(timerProfile);
             }
         });
-
     }
     public  int getNextRealmId(){
         int nextId =0 ;
@@ -146,10 +143,6 @@ public class RealmHelper {
 
     public TimerProfile getTimerProfileById(int id ){
 
-    /*   RealmResults<TimerProfile> timerProfiles = realm.where(TimerProfile.class)
-                .equalTo(TimerProfileKeys.KEY_ID, id)
-                .findAllSorted("zacCas");
-        TimerProfile timerProfile = timerProfiles.first();*/
 
         RealmQuery<TimerProfile> query = realm.where(TimerProfile.class);
         query.equalTo(TimerProfileKeys.KEY_ID, id);

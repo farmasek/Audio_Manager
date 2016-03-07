@@ -13,7 +13,7 @@ import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.notifications.NotificationHelper;
 import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 import baranek.vojtech.audiomanager.volumeChangeManager.AlarmReceiver;
-import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.model.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 import baranek.vojtech.audiomanager.volumeChangeManager.AndroidProfileChanger;

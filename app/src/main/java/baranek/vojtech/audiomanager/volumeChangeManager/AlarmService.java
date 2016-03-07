@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import baranek.vojtech.audiomanager.notifications.NotificationHelper;
-import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.model.RealmHelper;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;

@@ -6,7 +6,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.model.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import io.realm.RealmResults;
 

@@ -1,23 +1,20 @@
-package baranek.vojtech.audiomanager;
+package baranek.vojtech.audiomanager.mainActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import baranek.vojtech.audiomanager.mainActivity.MainActivityPresenter;
+import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**

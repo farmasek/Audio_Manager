@@ -8,12 +8,11 @@ import android.net.Uri;
 import baranek.vojtech.audiomanager.R;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmCollisionChecker;
 import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
-import baranek.vojtech.audiomanager.RealmHelper;
+import baranek.vojtech.audiomanager.model.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileHelper;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 import baranek.vojtech.audiomanager.profileActivity.ProfileActivity;
-import baranek.vojtech.audiomanager.profileActivity.ProfileActivityPresenterImpl;
 
 /**
  * Created by Farmas on 27.11.2015.

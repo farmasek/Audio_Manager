@@ -23,8 +23,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import baranek.vojtech.audiomanager.MyPreferenceActivity;
 import baranek.vojtech.audiomanager.R;
-import baranek.vojtech.audiomanager.RealmHelper;
-import baranek.vojtech.audiomanager.TimerProfileAdapter;
+import baranek.vojtech.audiomanager.model.RealmHelper;
 import baranek.vojtech.audiomanager.model.TimerProfile;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 import baranek.vojtech.audiomanager.volumeChangeManager.AndroidProfileChanger;
@@ -107,6 +106,7 @@ public class MainActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
 

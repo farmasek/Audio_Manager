@@ -43,7 +43,7 @@
         <receiver android:name=".volumeChangeManager.AlarmReceiver"/>
         <receiver android:name=".notifications.NotificationReceiver"/>
 
-        <receiver android:name=".alarmTimingUtil.BootCompletReceiver">
+        <receiver android:name=".volumeChangeManager.BootCompletReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

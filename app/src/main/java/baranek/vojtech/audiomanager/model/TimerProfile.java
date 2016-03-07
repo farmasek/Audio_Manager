@@ -30,8 +30,7 @@ public class TimerProfile extends RealmObject{
 
     public TimerProfile(int id, String nazev, int zacCas, int casDoKonce, int zacRez, int konRez,
                         int zacMedia, int zacVyzvaneni, int zacAlarm, int konMedia, int konVyzvaneni, int konAlarm,
-                        int zacOzn, int konOzn,
-                        boolean konZap, String dny, boolean isZap) {
+                        int zacOzn, int konOzn, boolean konZap, String dny, boolean isZap) {
         this.id = id;
         this.zacCas = zacCas;
         this.casDoKonce = casDoKonce;

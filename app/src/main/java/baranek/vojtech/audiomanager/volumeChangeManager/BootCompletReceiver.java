@@ -1,10 +1,11 @@
-package baranek.vojtech.audiomanager.alarmTimingUtil;
+package baranek.vojtech.audiomanager.volumeChangeManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import baranek.vojtech.audiomanager.alarmTimingUtil.AlarmControl;
 import baranek.vojtech.audiomanager.model.TimerProfileKeys;
 
 /**
